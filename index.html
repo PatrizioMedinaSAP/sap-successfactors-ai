@@ -3,248 +3,450 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI in HR with SAP SuccessFactors</title>
+<title>AI in HR — SAP SuccessFactors</title>
+<meta name="description" content="Predictive, generative, and agentic AI in SAP SuccessFactors — and the HR outcomes customers have published." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
 <style>
   :root{
-    --sap-blue:#0a2d5e;        /* deep brand blue */
-    --sap-blue-2:#0f3d7a;      /* lighter blue */
-    --sap-accent:#1b90ff;      /* bright SAP blue */
-    --gold:#f0ab00;            /* SAP gold accent */
-    --gold-soft:#ffd470;
-    --ink:#1a2733;
-    --muted:#5b6b7b;
-    --line:#e3e9f0;
-    --bg:#ffffff;
-    --bg-soft:#f5f8fc;
-    --radius:16px;
-    --shadow:0 10px 30px rgba(10,45,94,.08);
-    --max:1140px;
+    /* SAP palette — cool, restrained */
+    --navy:#0a2d5e;          /* primary deep brand blue */
+    --navy-900:#071f41;      /* darkest */
+    --navy-700:#0e3a73;
+    --blue:#0a6ed1;          /* SAP interactive blue, used sparingly */
+    --gold:#f0ab00;          /* accent — precise use only */
+
+    --ink:#0f1b2d;           /* near-black text, navy-tinted */
+    --body:#38495c;          /* body copy, cool gray */
+    --muted:#6a7c90;         /* secondary / labels */
+    --line:#dde4ec;          /* hairlines, one cool gray family */
+    --line-strong:#c3cdda;
+
+    --paper:#ffffff;
+    --paper-soft:#f4f6fa;    /* cool off-white section tone */
+
+    --maxw:1180px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+
+    /* z-index scale */
+    --z-base:1;
+    --z-grain:2;
+    --z-header:100;
   }
 
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink);
-    background:var(--bg);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--body);
+    background:var(--paper);
     line-height:1.6;
+    font-size:17px;
     -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
   }
-  a{color:inherit;}
-  img{max-width:100%;}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+  h1,h2,h3{
+    font-family:"Fraunces",Georgia,"Times New Roman",serif;
+    color:var(--ink);
+    font-weight:500;
+    letter-spacing:-.015em;
+    text-wrap:balance;
+  }
+  p{text-wrap:pretty;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  ::selection{background:rgba(240,171,0,.28);color:var(--navy-900);}
+
+  :focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  @media(max-width:600px){.wrap{padding:0 22px;}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    font-family:"Inter",sans-serif;
+    font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .eyebrow::before{
+    content:"";width:28px;height:2px;background:var(--gold);display:inline-block;
+  }
 
   /* ---------- Header ---------- */
   header.site{
-    position:sticky;top:0;z-index:50;
-    background:rgba(255,255,255,.9);
-    backdrop-filter:blur(10px);
+    position:sticky;top:0;z-index:var(--z-header);
+    background:rgba(255,255,255,.82);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
     border-bottom:1px solid var(--line);
   }
-  .nav{display:flex;align-items:center;justify-content:space-between;height:68px;}
-  .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:-.01em;color:var(--sap-blue);}
-  .brand .logo{
-    width:40px;height:26px;border-radius:5px;
-    background:linear-gradient(135deg,var(--sap-blue),var(--sap-accent));
-    display:flex;align-items:center;justify-content:center;
-    color:#fff;font-size:12px;font-weight:800;letter-spacing:.02em;
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;}
+  .brand{display:flex;align-items:center;gap:14px;}
+  .wordmark{
+    font-family:"Inter",sans-serif;font-weight:700;font-size:20px;letter-spacing:-.02em;
+    color:var(--navy);line-height:1;
+    border-bottom:3px solid var(--gold);padding-bottom:3px;
   }
-  .brand small{display:block;font-weight:500;font-size:12px;color:var(--muted);letter-spacing:0;}
-  nav.links{display:flex;gap:28px;}
-  nav.links a{text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;transition:color .2s;}
-  nav.links a:hover{color:var(--sap-accent);}
-  @media(max-width:760px){nav.links{display:none;}}
+  .brand .div{width:1px;height:26px;background:var(--line-strong);}
+  .brand .unit{font-size:13px;color:var(--muted);font-weight:500;line-height:1.3;max-width:15ch;}
+  .brand .unit b{display:block;color:var(--ink);font-weight:600;}
+  nav.links{display:flex;gap:34px;align-items:center;}
+  nav.links a{
+    font-size:14.5px;font-weight:500;color:var(--body);
+    padding:6px 0;position:relative;transition:color .2s var(--ease);
+  }
+  nav.links a::after{
+    content:"";position:absolute;left:0;right:100%;bottom:0;height:1.5px;
+    background:var(--navy);transition:right .25s var(--ease);
+  }
+  nav.links a:hover{color:var(--navy);}
+  nav.links a:hover::after{right:0;}
+  @media(max-width:820px){nav.links,.brand .div,.brand .unit{display:none;}}
 
   /* ---------- Hero ---------- */
   .hero{
-    position:relative;overflow:hidden;color:#fff;
-    background:
-      radial-gradient(1200px 500px at 80% -10%,rgba(27,144,255,.45),transparent 60%),
-      radial-gradient(900px 500px at 0% 120%,rgba(240,171,0,.25),transparent 55%),
-      linear-gradient(160deg,var(--sap-blue) 0%,var(--sap-blue-2) 55%,#0a2340 100%);
+    position:relative;overflow:hidden;color:#eaf0f8;
+    background:var(--navy-900);
   }
-  .hero .wrap{padding:88px 24px 96px;}
-  .eyebrow{
-    display:inline-block;font-size:13px;font-weight:700;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--gold-soft);margin-bottom:18px;
+  /* subtle editorial grid texture — no glow blobs */
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:var(--z-base);
+    background-image:
+      linear-gradient(to right,rgba(255,255,255,.04) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:76px 76px;
+    -webkit-mask-image:radial-gradient(130% 100% at 85% 0%,#000 30%,transparent 85%);
+    mask-image:radial-gradient(130% 100% at 85% 0%,#000 30%,transparent 85%);
   }
+  .hero .wrap{position:relative;z-index:var(--z-grain);}
+  .hero-grid{
+    display:grid;grid-template-columns:1.55fr .9fr;gap:56px;
+    padding:112px 0 108px;align-items:end;
+  }
+  .hero .eyebrow{color:#9fb6d6;}
   .hero h1{
-    font-size:clamp(32px,5vw,54px);line-height:1.1;margin:0 0 18px;
-    font-weight:800;letter-spacing:-.02em;max-width:18ch;
+    color:#ffffff;
+    font-size:clamp(40px,6vw,74px);
+    line-height:1.02;
+    margin:26px 0 0;
+    max-width:16ch;
+    font-weight:400;
   }
-  .hero p.lede{font-size:clamp(17px,2.1vw,21px);color:#d7e3f4;max-width:60ch;margin:0 0 34px;}
-  .cta{display:flex;gap:14px;flex-wrap:wrap;}
+  .hero h1 em{font-style:italic;color:var(--gold);font-weight:400;}
+  .hero .lede{
+    font-size:clamp(17px,1.4vw,20px);
+    color:#c2d2e8;max-width:46ch;margin:28px 0 0;line-height:1.55;
+  }
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:40px;}
+
+  /* right rail — editorial index */
+  .hero-rail{border-left:1px solid rgba(255,255,255,.14);padding-left:28px;}
+  .hero-rail .rail-label{
+    font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#7f99bd;
+    margin-bottom:20px;
+  }
+  .hero-rail ol{list-style:none;margin:0;padding:0;}
+  .hero-rail li{
+    display:flex;gap:16px;align-items:baseline;
+    padding:16px 0;border-top:1px solid rgba(255,255,255,.1);
+  }
+  .hero-rail li:last-child{border-bottom:1px solid rgba(255,255,255,.1);}
+  .hero-rail .ix{
+    font-family:"Fraunces",serif;font-size:15px;color:var(--gold);font-weight:500;
+    font-variant-numeric:tabular-nums;min-width:22px;
+  }
+  .hero-rail .rl-t{font-size:15px;color:#e7eefa;font-weight:500;line-height:1.3;}
+  .hero-rail .rl-t span{display:block;font-size:12.5px;color:#8ba3c6;font-weight:400;margin-top:2px;}
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr;gap:44px;padding:88px 0 80px;}
+    .hero-rail{border-left:none;border-top:1px solid rgba(255,255,255,.14);padding-left:0;padding-top:32px;}
+  }
+
+  /* ---------- Buttons ---------- */
   .btn{
-    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
-    padding:13px 24px;border-radius:999px;font-weight:700;font-size:15px;transition:transform .15s,box-shadow .2s;
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:"Inter",sans-serif;font-size:15px;font-weight:600;letter-spacing:-.01em;
+    padding:14px 26px;border-radius:2px;cursor:pointer;
+    transition:background .22s var(--ease),color .22s var(--ease),border-color .22s var(--ease),transform .08s var(--ease);
   }
-  .btn-gold{background:var(--gold);color:#3a2b00;}
-  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(240,171,0,.35);}
-  .btn-ghost{border:1.5px solid rgba(255,255,255,.4);color:#fff;}
-  .btn-ghost:hover{border-color:#fff;transform:translateY(-2px);}
+  .btn svg{transition:transform .25s var(--ease);}
+  .btn:hover svg{transform:translateX(4px);}
+  .btn:active{transform:translateY(1px);}
+  .btn-solid{background:#ffffff;color:var(--navy-900);}
+  .btn-solid:hover{background:var(--gold);color:var(--navy-900);}
+  .btn-line{border:1px solid rgba(255,255,255,.38);color:#fff;}
+  .btn-line:hover{border-color:#fff;background:rgba(255,255,255,.06);}
+  .btn-navy{background:var(--navy);color:#fff;}
+  .btn-navy:hover{background:var(--navy-700);}
+  .btn-navy-line{border:1px solid var(--line-strong);color:var(--navy);}
+  .btn-navy-line:hover{border-color:var(--navy);background:var(--paper-soft);}
 
-  /* ---------- Section ---------- */
-  section{padding:86px 0;}
-  section.alt{background:var(--bg-soft);}
-  .section-head{max-width:70ch;margin-bottom:46px;}
-  .tag{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sap-accent);}
-  h2{font-size:clamp(26px,3.5vw,38px);line-height:1.15;margin:12px 0 14px;font-weight:800;letter-spacing:-.02em;color:var(--sap-blue);}
-  .section-head p{font-size:18px;color:var(--muted);margin:0;}
+  /* ---------- Section scaffold ---------- */
+  section{padding:120px 0;}
+  @media(max-width:700px){section{padding:76px 0;}}
+  section.alt{background:var(--paper-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 
-  /* ---------- 3 Types of AI ---------- */
-  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  @media(max-width:900px){.grid-3{grid-template-columns:1fr;}}
-  .card{
-    background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
-    padding:30px 28px;box-shadow:var(--shadow);position:relative;overflow:hidden;
-    transition:transform .2s,box-shadow .2s;
+  .section-head{max-width:62ch;margin-bottom:68px;}
+  .section-head h2{
+    font-size:clamp(30px,4vw,46px);line-height:1.08;margin:18px 0 20px;font-weight:500;
   }
-  .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(10,45,94,.14);}
-  .card .topbar{position:absolute;top:0;left:0;right:0;height:5px;background:var(--sap-accent);}
-  .card:nth-child(2) .topbar{background:var(--gold);}
-  .card:nth-child(3) .topbar{background:linear-gradient(90deg,var(--sap-accent),var(--gold));}
-  .icon{
-    width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;
-    font-size:24px;margin-bottom:18px;background:#eaf3ff;color:var(--sap-accent);
-  }
-  .card:nth-child(2) .icon{background:#fff5df;color:#b07e00;}
-  .card:nth-child(3) .icon{background:linear-gradient(135deg,#eaf3ff,#fff5df);color:var(--sap-blue);}
-  .card h3{margin:0 0 4px;font-size:21px;color:var(--sap-blue);font-weight:800;}
-  .card .sub{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;}
-  .card p{margin:0;color:var(--muted);font-size:15.5px;}
-  .card .eg{margin-top:16px;font-size:14px;color:var(--ink);background:var(--bg-soft);border-radius:10px;padding:12px 14px;}
-  .card .eg b{color:var(--sap-blue);}
+  .section-head .intro{font-size:19px;color:var(--body);margin:0;max-width:56ch;}
 
-  /* ---------- Use cases ---------- */
-  .uc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-  @media(max-width:980px){.uc-grid{grid-template-columns:repeat(2,1fr);}}
-  @media(max-width:520px){.uc-grid{grid-template-columns:1fr;}}
+  /* ---------- Section 1 — three types (editorial numbered rows) ---------- */
+  .types{border-top:1px solid var(--line);}
+  .type-row{
+    display:grid;grid-template-columns:auto 1.1fr 1.4fr;gap:48px;
+    padding:46px 0;border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .type-row .num{
+    font-family:"Fraunces",serif;font-size:30px;font-weight:400;color:var(--line-strong);
+    font-variant-numeric:tabular-nums;line-height:1;padding-top:4px;
+  }
+  .type-row .lead h3{font-size:28px;margin:0 0 10px;line-height:1.1;font-weight:500;}
+  .type-row .kicker{
+    font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);
+    display:inline-flex;align-items:center;gap:9px;margin-bottom:14px;
+  }
+  .type-row .kicker .ico{color:var(--navy);display:inline-flex;}
+  .type-row .desc p{margin:0 0 18px;color:var(--body);font-size:16.5px;}
+  .type-row .eg{
+    display:block;border-left:2px solid var(--gold);padding:4px 0 4px 18px;
+    font-size:15px;color:var(--ink);
+  }
+  .type-row .eg span{color:var(--muted);font-weight:500;letter-spacing:.04em;text-transform:uppercase;font-size:11.5px;display:block;margin-bottom:4px;}
+  @media(max-width:860px){
+    .type-row{grid-template-columns:auto 1fr;gap:20px 24px;}
+    .type-row .desc{grid-column:1 / -1;padding-left:52px;}
+  }
+  @media(max-width:520px){
+    .type-row .desc{padding-left:0;}
+  }
+
+  /* ---------- Section 2 — use cases (hairline list) ---------- */
+  .uc-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:0 72px;border-top:1px solid var(--line);
+  }
   .uc{
-    background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:22px 20px;
-    transition:border-color .2s,transform .2s;
+    display:flex;gap:20px;align-items:flex-start;
+    padding:30px 0;border-bottom:1px solid var(--line);
   }
-  .uc:hover{border-color:var(--sap-accent);transform:translateY(-3px);}
-  .uc .n{font-size:22px;margin-bottom:10px;}
-  .uc h4{margin:0 0 6px;font-size:16.5px;color:var(--sap-blue);font-weight:800;}
-  .uc p{margin:0;font-size:14px;color:var(--muted);}
+  .uc .ico{
+    flex:0 0 auto;width:40px;height:40px;color:var(--navy);
+    border:1px solid var(--line-strong);border-radius:3px;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .22s var(--ease),color .22s var(--ease),background .22s var(--ease);
+  }
+  .uc:hover .ico{border-color:var(--navy);background:var(--navy);color:#fff;}
+  .uc h4{
+    font-family:"Inter",sans-serif;font-size:17px;color:var(--ink);font-weight:600;margin:3px 0 6px;letter-spacing:-.01em;
+  }
+  .uc p{margin:0;font-size:15px;color:var(--muted);line-height:1.5;}
+  @media(max-width:760px){.uc-grid{grid-template-columns:1fr;gap:0;}}
 
-  /* ---------- Case studies ---------- */
-  .cs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  @media(max-width:900px){.cs-grid{grid-template-columns:1fr;}}
-  .cs{
-    display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--line);
-    border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;
+  /* ---------- Section 3 — case studies (metric-led rows) ---------- */
+  .cases{border-top:1px solid var(--line);}
+  .case{
+    display:grid;grid-template-columns:.9fr 1.4fr;gap:56px;
+    padding:56px 0;border-bottom:1px solid var(--line);align-items:center;
   }
-  .cs:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(10,45,94,.14);}
-  .cs .head{padding:24px 26px 0;}
-  .cs .company{font-size:19px;font-weight:800;color:var(--sap-blue);}
-  .cs .metric{
-    font-size:40px;font-weight:800;color:var(--sap-accent);letter-spacing:-.02em;line-height:1;margin:18px 0 6px;padding:0 26px;
+  .case .metric{line-height:1;}
+  .case .metric .fig{
+    font-family:"Fraunces",serif;font-weight:400;
+    font-size:clamp(58px,8vw,104px);color:var(--navy);
+    letter-spacing:-.03em;line-height:.92;
+    font-variant-numeric:tabular-nums;
   }
-  .cs:nth-child(1) .metric{color:var(--gold);}
-  .cs .metric small{display:block;font-size:14px;font-weight:600;color:var(--muted);margin-top:8px;letter-spacing:0;}
-  .cs .body{padding:16px 26px 24px;color:var(--muted);font-size:15px;flex:1;}
-  .cs .foot{padding:0 26px 26px;}
-  .cs .read{
-    display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-weight:700;font-size:15px;color:var(--sap-accent);
+  .case .metric .fig u{text-decoration:none;color:var(--gold);}
+  .case .metric .cap{
+    display:block;font-size:15px;color:var(--muted);margin-top:16px;max-width:30ch;line-height:1.45;
   }
-  .cs .read:hover{color:var(--sap-blue);}
-  .cs .read .arrow{transition:transform .2s;}
-  .cs .read:hover .arrow{transform:translateX(4px);}
+  .case .detail .org{
+    font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;
+  }
+  .case .detail h3{font-size:24px;margin:0 0 14px;font-weight:500;line-height:1.2;}
+  .case .detail p{margin:0 0 22px;color:var(--body);font-size:16.5px;max-width:52ch;}
+  .link{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:15px;font-weight:600;color:var(--navy);
+    padding-bottom:3px;border-bottom:1.5px solid var(--line-strong);
+    transition:border-color .22s var(--ease),gap .22s var(--ease);
+  }
+  .link svg{transition:transform .25s var(--ease);}
+  .link:hover{border-color:var(--navy);}
+  .link:hover svg{transform:translateX(4px);}
+  @media(max-width:820px){
+    .case{grid-template-columns:1fr;gap:24px;padding:44px 0;}
+  }
 
+  /* hub strip */
   .hub{
-    margin-top:34px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
-    background:linear-gradient(135deg,var(--sap-blue),var(--sap-blue-2));color:#fff;border-radius:var(--radius);padding:28px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+    margin-top:56px;padding:34px 40px;background:var(--navy-900);color:#fff;border-radius:3px;
+    position:relative;overflow:hidden;
   }
-  .hub h3{margin:0 0 4px;font-size:20px;font-weight:800;}
-  .hub p{margin:0;color:#cfe0f5;font-size:15px;}
-  .hub a{
-    white-space:nowrap;background:var(--gold);color:#3a2b00;text-decoration:none;font-weight:700;
-    padding:12px 22px;border-radius:999px;font-size:15px;transition:transform .15s;
+  .hub::after{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gold);
   }
-  .hub a:hover{transform:translateY(-2px);}
+  .hub h3{color:#fff;font-size:21px;margin:0 0 6px;font-weight:500;}
+  .hub p{margin:0;color:#aec2dd;font-size:15px;max-width:52ch;}
+  .hub .link{color:#fff;border-color:rgba(255,255,255,.35);white-space:nowrap;}
+  .hub .link:hover{border-color:var(--gold);}
+  @media(max-width:620px){.hub{padding:28px 26px;}}
 
   /* ---------- CTA band ---------- */
-  .band{
-    background:
-      radial-gradient(800px 400px at 90% 10%,rgba(240,171,0,.25),transparent 60%),
-      linear-gradient(160deg,var(--sap-blue),#0a2340);
-    color:#fff;text-align:center;
+  .band{background:var(--navy);color:#fff;position:relative;overflow:hidden;}
+  .band::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(to right,rgba(255,255,255,.04) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:76px 76px;
+    -webkit-mask-image:radial-gradient(120% 120% at 15% 100%,#000 10%,transparent 70%);
+    mask-image:radial-gradient(120% 120% at 15% 100%,#000 10%,transparent 70%);
   }
-  .band h2{color:#fff;}
-  .band p{color:#d7e3f4;font-size:18px;max-width:56ch;margin:0 auto 30px;}
+  .band .wrap{position:relative;}
+  .band-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:center;}
+  .band h2{color:#fff;font-size:clamp(28px,3.6vw,42px);margin:16px 0 18px;font-weight:500;line-height:1.1;}
+  .band p{color:#c2d2e8;font-size:18px;margin:0;max-width:46ch;}
+  .band .eyebrow{color:#9fb6d6;}
+  .band-actions{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+  .band-actions .btn{width:100%;justify-content:space-between;}
+  @media(max-width:820px){.band-grid{grid-template-columns:1fr;gap:36px;}.band-actions{align-items:stretch;}}
 
   /* ---------- Footer ---------- */
-  footer{background:#071a33;color:#9fb4ce;font-size:13.5px;padding:40px 0;}
-  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center;}
-  footer .brand{color:#fff;}
-  footer .brand small{color:#9fb4ce;}
-  footer .disc{max-width:60ch;}
+  footer{background:var(--navy-900);color:#8ea6c6;font-size:13.5px;padding:64px 0 48px;}
+  .foot-top{
+    display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start;
+    padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  footer .wordmark{color:#fff;border-bottom-color:var(--gold);}
+  .foot-top .unit b{color:#fff;}
+  .foot-nav{display:flex;gap:28px;flex-wrap:wrap;}
+  .foot-nav a{color:#aec2dd;font-size:14px;font-weight:500;transition:color .2s var(--ease);}
+  .foot-nav a:hover{color:#fff;}
+  .disc{max-width:80ch;margin:28px 0 0;line-height:1.7;color:#7a93b4;font-size:13px;}
+  .disc .ln{display:block;}
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto !important;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .btn svg,.link svg{transition:none;}
+  }
 </style>
 </head>
 <body>
 
 <header class="site">
   <div class="wrap nav">
-    <div class="brand">
-      <span class="logo">SAP</span>
-      <span>SuccessFactors<small>AI for Human Resources</small></span>
-    </div>
-    <nav class="links">
-      <a href="#types">AI Types</a>
-      <a href="#usecases">Use Cases</a>
-      <a href="#cases">Case Studies</a>
-      <a href="#contact">Get Started</a>
+    <a class="brand" href="#top" aria-label="SAP SuccessFactors — AI for Human Resources">
+      <span class="wordmark">SAP</span>
+      <span class="div" aria-hidden="true"></span>
+      <span class="unit"><b>SuccessFactors</b>AI for Human Resources</span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="#types">The three AI types</a>
+      <a href="#usecases">Use cases</a>
+      <a href="#cases">Case studies</a>
+      <a href="#contact">SAP Business AI</a>
     </nav>
   </div>
 </header>
 
 <!-- HERO -->
-<div class="hero">
+<div class="hero" id="top">
   <div class="wrap">
-    <span class="eyebrow">SAP SuccessFactors · Human Capital Management</span>
-    <h1>AI that transforms how your people work</h1>
-    <p class="lede">From predictive insight to autonomous execution, SAP brings three kinds of AI to HR — helping leaders cut busywork, make better decisions, and give every employee a simpler experience.</p>
-    <div class="cta">
-      <a class="btn btn-gold" href="#cases">See the results →</a>
-      <a class="btn btn-ghost" href="#types">Explore the AI types</a>
+    <div class="hero-grid">
+      <div class="hero-lead">
+        <span class="eyebrow">Human Capital Management</span>
+        <h1>Three kinds of AI, built into <em>SAP SuccessFactors</em>.</h1>
+        <p class="lede">Predictive, generative, and agentic AI work together across the suite — reducing administrative load, sharpening workforce decisions, and simplifying the day-to-day for every employee.</p>
+        <div class="hero-actions">
+          <a class="btn btn-solid" href="#cases">
+            Read the case studies
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-line" href="#types">Start with the three types</a>
+        </div>
+      </div>
+      <aside class="hero-rail" aria-label="On this page">
+        <div class="rail-label">In this briefing</div>
+        <ol>
+          <li><span class="ix">01</span><span class="rl-t">The three types of AI<span>Predictive · Generative · Agentic</span></span></li>
+          <li><span class="ix">02</span><span class="rl-t">Use cases in HR<span>Across the employee lifecycle</span></span></li>
+          <li><span class="ix">03</span><span class="rl-t">Customer case studies<span>Somerset Council · PwC · PostNL</span></span></li>
+        </ol>
+      </aside>
     </div>
   </div>
 </div>
 
-<!-- SECTION 1: 3 TYPES OF AI -->
+<!-- SECTION 1: THREE TYPES -->
 <section id="types">
   <div class="wrap">
-    <div class="section-head">
-      <span class="tag">01 · The Foundation</span>
-      <h2>The 3 types of AI in SAP</h2>
-      <p>SAP combines three complementary forms of artificial intelligence across the SuccessFactors suite — each solving a different class of HR problem.</p>
+    <div class="section-head reveal">
+      <span class="eyebrow">Section 01 — The foundation</span>
+      <h2>The three types of AI in SAP</h2>
+      <p class="intro">SAP combines three complementary forms of artificial intelligence across SuccessFactors — each addressing a distinct class of HR problem.</p>
     </div>
-    <div class="grid-3">
-      <article class="card">
-        <span class="topbar"></span>
-        <div class="icon">📈</div>
-        <h3>Predictive AI</h3>
-        <div class="sub">Anticipate</div>
-        <p>Uses data patterns to forecast outcomes before they happen — so HR can act early rather than react late.</p>
-        <div class="eg"><b>Example:</b> Predicting employee flight risk and modelling future workforce demand.</div>
+
+    <div class="types">
+      <article class="type-row reveal">
+        <div class="num">01</div>
+        <div class="lead">
+          <div class="kicker">
+            <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17l5-5 4 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7h4v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Anticipate
+          </div>
+          <h3>Predictive AI</h3>
+        </div>
+        <div class="desc">
+          <p>Reads patterns in existing data to forecast outcomes before they occur — so HR can act early rather than react late.</p>
+          <span class="eg"><span>Example</span>Predicting employee flight risk and modelling future workforce demand.</span>
+        </div>
       </article>
-      <article class="card">
-        <span class="topbar"></span>
-        <div class="icon">💬</div>
-        <h3>Generative AI — Joule</h3>
-        <div class="sub">Assist</div>
-        <p>SAP's AI copilot answers questions, drafts content, and simplifies HR tasks through natural language.</p>
-        <div class="eg"><b>Example:</b> Ask Joule to explain a policy, draft a job description, or summarise a team in plain language.</div>
+
+      <article class="type-row reveal">
+        <div class="num">02</div>
+        <div class="lead">
+          <div class="kicker">
+            <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H9l-4 3v-3H4z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 10h8M8 13h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            Assist
+          </div>
+          <h3>Generative AI — Joule</h3>
+        </div>
+        <div class="desc">
+          <p>SAP's AI copilot answers questions, drafts content, and simplifies HR tasks through natural language.</p>
+          <span class="eg"><span>Example</span>Ask Joule to explain a policy, draft a job description, or summarise a team in plain language.</span>
+        </div>
       </article>
-      <article class="card">
-        <span class="topbar"></span>
-        <div class="icon">⚙️</div>
-        <h3>Agentic AI</h3>
-        <div class="sub">Automate</div>
-        <p>Autonomous AI agents that execute multi-step tasks end to end, without human intervention at each step.</p>
-        <div class="eg"><b>Example:</b> Running full onboarding journeys and processing payroll automatically.</div>
+
+      <article class="type-row reveal">
+        <div class="num">03</div>
+        <div class="lead">
+          <div class="kicker">
+            <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            Automate
+          </div>
+          <h3>Agentic AI</h3>
+        </div>
+        <div class="desc">
+          <p>Autonomous AI agents that execute multi-step tasks end to end, without human intervention at each step.</p>
+          <span class="eg"><span>Example</span>Running full onboarding journeys and processing payroll automatically.</span>
+        </div>
       </article>
     </div>
   </div>
@@ -253,20 +455,41 @@
 <!-- SECTION 2: USE CASES -->
 <section id="usecases" class="alt">
   <div class="wrap">
-    <div class="section-head">
-      <span class="tag">02 · In Practice</span>
+    <div class="section-head reveal">
+      <span class="eyebrow">Section 02 — In practice</span>
       <h2>AI use cases across the HR lifecycle</h2>
-      <p>Wherever work happens in HR, AI removes friction — from the first application to ongoing performance and growth.</p>
+      <p class="intro">Wherever work happens in HR, AI removes friction — from the first application through ongoing performance and growth.</p>
     </div>
+
     <div class="uc-grid">
-      <div class="uc"><div class="n">🎯</div><h4>Recruitment &amp; Screening</h4><p>Surface the best-fit candidates faster and reduce manual CV review.</p></div>
-      <div class="uc"><div class="n">🚀</div><h4>Onboarding</h4><p>Guided, automated journeys that get new hires productive from day one.</p></div>
-      <div class="uc"><div class="n">💳</div><h4>Payroll Automation</h4><p>Faster, more accurate pay runs with far less manual processing.</p></div>
-      <div class="uc"><div class="n">📊</div><h4>Workforce Planning</h4><p>Forecast demand, skills gaps and headcount with predictive models.</p></div>
-      <div class="uc"><div class="n">🙋</div><h4>Employee Self-Service</h4><p>Joule answers everyday HR questions instantly, in natural language.</p></div>
-      <div class="uc"><div class="n">⭐</div><h4>Performance Management</h4><p>Draft reviews, summarise feedback and track goals with less admin.</p></div>
-      <div class="uc"><div class="n">🧩</div><h4>Skills Matching</h4><p>Connect people to roles, projects and learning based on real skills.</p></div>
-      <div class="uc"><div class="n">🔁</div><h4>Talent Mobility</h4><p>Spot internal candidates and growth paths across the organisation.</p></div>
+      <div class="uc reveal">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M20 20l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <div><h4>Recruitment &amp; screening</h4><p>Surface best-fit candidates faster and cut manual CV review.</p></div>
+      </div>
+      <div class="uc reveal">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 20v-1a4 4 0 014-4h2a4 4 0 014 4v1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="8" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M17 9l1.6 1.6L22 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div><h4>Onboarding</h4><p>Guided, automated journeys that get new hires productive from day one.</p></div>
+      </div>
+      <div class="uc reveal">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.6"/><path d="M7 14h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <div><h4>Payroll automation</h4><p>Faster, more accurate pay runs with far less manual processing.</p></div>
+      </div>
+      <div class="uc reveal">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 20V4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="8" y="11" width="3" height="6" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="7" width="3" height="10" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>Workforce planning</h4><p>Forecast demand, skills gaps and headcount with predictive models.</p></div>
+      </div>
+      <div class="uc reveal">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.6"/><path d="M5 20a7 7 0 0114 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <div><h4>Employee self-service</h4><p>Joule answers everyday HR questions instantly, in natural language.</p></div>
+      </div>
+      <div class="uc reveal">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.3 4.7 5.2.8-3.75 3.65.9 5.15L12 15l-4.65 2.45.9-5.15L4.5 8.5l5.2-.8L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+        <div><h4>Performance management</h4><p>Draft reviews, summarise feedback and track goals with less admin.</p></div>
+      </div>
+      <div class="uc reveal">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 7a2.5 2.5 0 10-2.4-3.2M6 9h4.5v4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 13.5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="13" y="13" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="6" r="3" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>Skills matching</h4><p>Connect people to roles, projects and learning based on real skills.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -274,49 +497,71 @@
 <!-- SECTION 3: CASE STUDIES -->
 <section id="cases">
   <div class="wrap">
-    <div class="section-head">
-      <span class="tag">03 · Proof</span>
+    <div class="section-head reveal">
+      <span class="eyebrow">Section 03 — Evidence</span>
       <h2>Customer case studies</h2>
-      <p>Real organisations delivering measurable outcomes with SAP AI in HR.</p>
-    </div>
-    <div class="cs-grid">
-
-      <article class="cs">
-        <div class="head"><div class="company">Somerset Council</div></div>
-        <div class="metric">13 months<small>to a single HR &amp; payroll platform for 8,500 employees</small></div>
-        <div class="body">Somerset Council modernised HR and payroll with SAP SuccessFactors and EPI-USE, consolidating onto one unified platform in a 13-month transformation.</div>
-        <div class="foot">
-          <a class="read" target="_blank" rel="noopener" href="https://news.sap.com/uk/2026/11/somerset-council-modernises-hr-and-payroll-with-sap-successfactors-and-epi-use-in-13-month-transformation/">Read more <span class="arrow">→</span></a>
-        </div>
-      </article>
-
-      <article class="cs">
-        <div class="head"><div class="company">PwC</div></div>
-        <div class="metric">60%<small>efficiency gain from an AI VAT tool for a pharma client</small></div>
-        <div class="body">PwC built an AI-powered VAT tool that delivered a 60% efficiency gain for a pharmaceutical client, while consolidating 100+ ERP systems with SAP.</div>
-        <div class="foot">
-          <a class="read" target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/pwc.html">Read more <span class="arrow">→</span></a>
-        </div>
-      </article>
-
-      <article class="cs">
-        <div class="head"><div class="company">PostNL</div></div>
-        <div class="metric">90%<small>reduction in payroll processing time</small></div>
-        <div class="body">PostNL combined Joule AI with SAP SuccessFactors Payroll to cut payroll processing time by 90%, freeing its HR team to focus on people, not paperwork.</div>
-        <div class="foot">
-          <a class="read" target="_blank" rel="noopener" href="https://www.sap.com/uk/products/artificial-intelligence.html">Read more <span class="arrow">→</span></a>
-        </div>
-      </article>
-
+      <p class="intro">Published outcomes from organisations running SAP AI across HR and payroll.</p>
     </div>
 
-    <!-- Hub -->
-    <div class="hub">
+    <div class="cases">
+      <article class="case reveal">
+        <div class="metric">
+          <div class="fig">13<span style="font-size:.42em;letter-spacing:-.02em;"> months</span></div>
+          <span class="cap">to a single HR &amp; payroll platform serving 8,500 employees</span>
+        </div>
+        <div class="detail">
+          <div class="org">Somerset Council</div>
+          <h3>One platform, in just over a year</h3>
+          <p>Somerset Council modernised HR and payroll with SAP SuccessFactors and EPI-USE, consolidating onto a single unified platform in a 13-month transformation.</p>
+          <a class="link" target="_blank" rel="noopener" href="https://news.sap.com/uk/2026/11/somerset-council-modernises-hr-and-payroll-with-sap-successfactors-and-epi-use-in-13-month-transformation/">
+            Read the story
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="case reveal">
+        <div class="metric">
+          <div class="fig"><u>60%</u></div>
+          <span class="cap">efficiency gain from an AI VAT tool built for a pharmaceutical client</span>
+        </div>
+        <div class="detail">
+          <div class="org">PwC</div>
+          <h3>AI efficiency at enterprise scale</h3>
+          <p>PwC built an AI-powered VAT tool that delivered a 60% efficiency gain for a pharmaceutical client, while consolidating more than 100 ERP systems with SAP.</p>
+          <a class="link" target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/pwc.html">
+            Read the story
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="case reveal">
+        <div class="metric">
+          <div class="fig"><u>90%</u></div>
+          <span class="cap">reduction in payroll processing time</span>
+        </div>
+        <div class="detail">
+          <div class="org">PostNL</div>
+          <h3>Payroll, in a fraction of the time</h3>
+          <p>PostNL combined Joule AI with SAP SuccessFactors Payroll to cut payroll processing time by 90%, freeing its HR team to focus on people rather than paperwork.</p>
+          <a class="link" target="_blank" rel="noopener" href="https://www.sap.com/uk/products/artificial-intelligence.html">
+            Read the story
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <div class="hub reveal">
       <div>
         <h3>SAP AI Implementations hub</h3>
-        <p>Explore more customer stories across Bosch, Bristol Myers Squibb and many more.</p>
+        <p>More customer stories across Bosch, Bristol Myers Squibb and others.</p>
       </div>
-      <a target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/ai-implementations.html">Browse all stories →</a>
+      <a class="link" target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/ai-implementations.html">
+        Browse all stories
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -324,24 +569,64 @@
 <!-- CTA BAND -->
 <section id="contact" class="band">
   <div class="wrap">
-    <h2>Ready to put AI to work in your HR?</h2>
-    <p>See how predictive insight, Joule, and agentic automation come together in SAP SuccessFactors to transform the employee experience.</p>
-    <div class="cta" style="justify-content:center;">
-      <a class="btn btn-gold" target="_blank" rel="noopener" href="https://www.sap.com/uk/products/artificial-intelligence.html">Discover SAP Business AI →</a>
-      <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/ai-implementations.html">See customer results</a>
+    <div class="band-grid">
+      <div class="reveal">
+        <span class="eyebrow">Next step</span>
+        <h2>Put SAP Business AI to work in HR</h2>
+        <p>See how predictive insight, Joule, and agentic automation come together across SAP SuccessFactors — and review the published results.</p>
+      </div>
+      <div class="band-actions reveal">
+        <a class="btn btn-solid" target="_blank" rel="noopener" href="https://www.sap.com/uk/products/artificial-intelligence.html">
+          Explore SAP Business AI
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-line" target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/ai-implementations.html">
+          Review customer results
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div class="brand">
-      <span class="logo" style="width:36px;height:24px;font-size:11px;">SAP</span>
-      <span>SuccessFactors<small>AI for Human Resources</small></span>
+    <div class="foot-top">
+      <div class="brand">
+        <span class="wordmark">SAP</span>
+        <span class="div" aria-hidden="true" style="background:rgba(255,255,255,.2);"></span>
+        <span class="unit"><b>SuccessFactors</b>AI for Human Resources</span>
+      </div>
+      <nav class="foot-nav" aria-label="Footer">
+        <a href="#types">The three AI types</a>
+        <a href="#usecases">Use cases</a>
+        <a href="#cases">Case studies</a>
+        <a href="#contact">SAP Business AI</a>
+      </nav>
     </div>
-    <p class="disc">Microsite for informational purposes. Outcomes and figures are drawn from published SAP customer stories. SAP, SuccessFactors and Joule are trademarks of SAP SE. © 2026.</p>
+    <p class="disc">
+      <span class="ln">Produced for informational purposes. Outcomes and figures are drawn from published SAP customer stories.</span>
+      <span class="ln">SAP, SuccessFactors and Joule are trademarks or registered trademarks of SAP SE in Germany and other countries. &copy; 2026.</span>
+    </p>
   </div>
 </footer>
+
+<script>
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var items = document.querySelectorAll('.reveal');
+    if(reduce || !('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  })();
+</script>
 
 </body>
 </html>

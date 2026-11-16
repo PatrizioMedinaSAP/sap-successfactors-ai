@@ -171,6 +171,28 @@
   .hub h3{font-size:19px;margin-bottom:5px;}
   .hub p{color:var(--text);font-size:15px;}
 
+  /* ---------- resources ---------- */
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start;}
+  @media(max-width:980px){.res-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:620px){.res-grid{grid-template-columns:1fr;}}
+  .res-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px 26px;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .25s,transform .25s;}
+  .res-card:hover{border-color:#c9d6ea;box-shadow:0 12px 30px rgba(5,16,58,.08);transform:translateY(-3px);}
+  .res-card.feature{border-color:#f1d488;border-top:3px solid var(--gold);}
+  .res-cat{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .res-cat .ric{width:40px;height:40px;border-radius:9px;background:#eaf3ff;display:flex;align-items:center;justify-content:center;flex:none;}
+  .res-cat .ric svg{width:21px;height:21px;stroke:var(--blue);fill:none;stroke-width:1.6;}
+  .res-card.feature .ric{background:#fff5df;}
+  .res-card.feature .ric svg{stroke:var(--gold);}
+  .res-cat h3{font-size:18px;}
+  .res-badge{align-self:flex-start;margin-bottom:14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9a6c00;background:#fff5df;padding:4px 10px;border-radius:999px;}
+  .res-links{list-style:none;padding:0;margin:0;}
+  .res-links a{display:flex;align-items:flex-start;gap:10px;text-decoration:none;color:var(--ink);font-size:15px;font-weight:500;line-height:1.4;padding:11px 0;border-top:1px solid var(--line-2);transition:color .18s;}
+  .res-links li:first-child a{border-top:none;padding-top:2px;}
+  .res-links a .lx{color:var(--muted);font-weight:400;font-size:13px;display:block;margin-top:1px;}
+  .res-links a svg{width:15px;height:15px;stroke:var(--blue);fill:none;stroke-width:1.9;margin-top:3px;flex:none;transition:transform .2s;}
+  .res-links a:hover{color:var(--blue);}
+  .res-links a:hover svg{transform:translate(2px,-2px);}
+
   /* ---------- CTA ---------- */
   .cta{position:relative;overflow:hidden;color:#fff;background:var(--navy);text-align:center;}
   .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 440px at 50% -20%,rgba(0,112,242,.55),transparent 62%),linear-gradient(135deg,#05103a,#0a1b4d);}
@@ -205,6 +227,7 @@
       <a href="#types">AI types</a>
       <a href="#usecases">Use cases</a>
       <a href="#cases">Customers</a>
+      <a href="#resources">Resources</a>
     </nav>
     <a class="btn btn-primary" href="#cta">Talk to SAP</a>
   </div>
@@ -351,6 +374,84 @@
         <p>More customer stories across Bosch, Bristol Myers Squibb, and many more.</p>
       </div>
       <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://www.sap.com/about/customer-stories/ai-implementations.html">Browse all stories</a>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="section soft" id="resources">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Explore further</span>
+      <h2>Resources to go deeper</h2>
+      <p>Official product pages, interactive demos, the latest releases, technical documentation, and free learning. Start with a demo, then dig into the detail.</p>
+    </div>
+
+    <div class="res-grid">
+
+      <article class="res-card feature reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="10 9 16 12 10 15 10 9" fill="currentColor" stroke="none"/></svg></span>
+          <h3>Demos &amp; product tours</h3>
+        </div>
+        <span class="res-badge">Start here</span>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/talent-management/product-tour.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Interactive demo: Talent Management AI</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/africa/products/hcm/core-hr-payroll/product-tour.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Interactive demo: Core HR and Payroll</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/trials-and-tours.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>HCM demos and trials with Joule</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://events.sap.com/soldemoseries-202609-joul/en_us/home.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Live event: Experience Joule in SAP SuccessFactors</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://community.sap.com/t5/human-capital-management-blog-posts-by-sap/links-to-sap-demo-recordings-and-key-public-presentations-for-hcm-business/ba-p/14123478"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>HCM Business AI demo recordings <span class="lx">Community collection</span></span></a></li>
+        </ul>
+      </article>
+
+      <article class="res-card reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><path d="M3 9l9-6 9 6v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 21V12h6v9"/></svg></span>
+          <h3>Product pages</h3>
+        </div>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/ai.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>AI in SAP SuccessFactors</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/successfactors-solutions-joule.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Joule, the HCM copilot</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/innovations.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>HCM innovations and AI roadmap</span></a></li>
+        </ul>
+      </article>
+
+      <article class="res-card reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><path d="M3 11l15-6v14l-15-6Z"/><path d="M3 11v5"/><path d="M8 13v6a1 1 0 0 0 1 1h2"/></svg></span>
+          <h3>Releases &amp; news</h3>
+        </div>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://news.sap.com/2026/04/sap-successfactors-1h-2026-release"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>1H 2026 release <span class="lx">Agentic AI agents</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://news.sap.com/2025/10/sap-successfactors-2h-2025-release-ai-skills-people-insights/"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>2H 2025 release <span class="lx">People Intelligence and AI</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://news.sap.com/2025/04/sap-successfactors-1h-2025-release-new-ai-enabled-innovations/"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>1H 2025 release <span class="lx">Joule mobile, 250+ features</span></span></a></li>
+        </ul>
+      </article>
+
+      <article class="res-card reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></span>
+          <h3>Technical documentation</h3>
+        </div>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://help.sap.com/docs/successfactors-platform/using-admin-center/premium-ai-features-in-sap-successfactors"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Premium AI features <span class="lx">What needs a licence</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://help.sap.com/docs/successfactors-platform/using-admin-center/base-ai-features-in-sap-successfactors"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Base AI features <span class="lx">Included functions</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://help.sap.com/docs/successfactors-platform/understanding-sap-successfactors-ai-agents/5ce5ab9a38c24b469a6cdbe857d99f8d.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Joule agents and assistants</span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://help.sap.com/docs/AUTONOMOUS_HCM"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Autonomous HCM agents hub</span></a></li>
+        </ul>
+      </article>
+
+      <article class="res-card reveal">
+        <div class="res-cat">
+          <span class="ric"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg></span>
+          <h3>Learning</h3>
+        </div>
+        <ul class="res-links">
+          <li><a target="_blank" rel="noopener" href="https://learning.sap.com/courses/experiencing-sap-business-ai"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Experiencing SAP Business AI <span class="lx">Free course</span></span></a></li>
+          <li><a target="_blank" rel="noopener" href="https://learning.sap.com/courses/exploring-joule-and-ai-agents-in-sap-successfactors/interacting-with-joule-for-sap-successfactors_c03ab32b-3029-4c62-b2ab-edbbe44dd250"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Interacting with Joule for SuccessFactors</span></a></li>
+        </ul>
+      </article>
+
     </div>
   </div>
 </section>

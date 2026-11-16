@@ -92,6 +92,7 @@
     content:"";position:absolute;inset:0;opacity:.5;
     background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
     background-size:64px 64px;
+    animation:drift 32s linear infinite;
     mask-image:radial-gradient(900px 500px at 70% 30%,#000,transparent 75%);
     -webkit-mask-image:radial-gradient(900px 500px at 70% 30%,#000,transparent 75%);
   }
@@ -192,6 +193,11 @@
   .res-links a svg{width:15px;height:15px;stroke:var(--blue);fill:none;stroke-width:1.9;margin-top:3px;flex:none;transition:transform .2s;}
   .res-links a:hover{color:var(--blue);}
   .res-links a:hover svg{transform:translate(2px,-2px);}
+  .res-tier{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:24px;}
+  .res-tier.more{margin-top:52px;padding-top:36px;border-top:1px solid var(--line);}
+  .res-tier .t{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);display:inline-flex;align-items:center;gap:10px;white-space:nowrap;}
+  .res-tier .t::before{content:"";width:22px;height:2px;background:var(--gold);}
+  .res-tier .d{font-size:14.5px;color:var(--muted);}
 
   /* ---------- CTA ---------- */
   .cta{position:relative;overflow:hidden;color:#fff;background:var(--navy);text-align:center;}
@@ -208,10 +214,34 @@
   footer .fbrand span{font-weight:700;}
   footer .disc{max-width:62ch;line-height:1.6;}
 
-  /* reveal */
-  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+  /* ---------- motion ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
   .reveal.in{opacity:1;transform:none;}
-  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}html{scroll-behavior:auto;}}
+  /* staggered cascades within grids */
+  .types .reveal:nth-child(2){transition-delay:.1s}
+  .types .reveal:nth-child(3){transition-delay:.2s}
+  .res-grid .reveal:nth-child(2){transition-delay:.08s}
+  .res-grid .reveal:nth-child(3){transition-delay:.16s}
+  .res-grid .reveal:nth-child(4){transition-delay:.24s}
+  .res-grid .reveal:nth-child(5){transition-delay:.32s}
+  .cases .reveal:nth-child(2){transition-delay:.12s}
+  .cases .reveal:nth-child(3){transition-delay:.24s}
+  /* hero entrance on load */
+  @keyframes heroIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  .hero .kicker,.hero h1,.hero .lede,.hero .actions,.hero .stats{opacity:0;animation:heroIn .85s cubic-bezier(.2,.7,.2,1) forwards;}
+  .hero .kicker{animation-delay:.05s}
+  .hero h1{animation-delay:.16s}
+  .hero .lede{animation-delay:.32s}
+  .hero .actions{animation-delay:.48s}
+  .hero .stats{animation-delay:.62s}
+  @keyframes drift{from{background-position:0 0,0 0}to{background-position:64px 64px,64px 64px}}
+  .count{font-variant-numeric:tabular-nums;}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .hero .kicker,.hero h1,.hero .lede,.hero .actions,.hero .stats{opacity:1;animation:none;}
+    .hero::after{animation:none!important;}
+    html{scroll-behavior:auto;}
+  }
   a:focus-visible,.btn:focus-visible{outline:3px solid #8fc0ff;outline-offset:3px;border-radius:6px;}
 </style>
 </head>
@@ -244,9 +274,9 @@
       <a class="btn btn-outline" href="#types">Explore the AI types</a>
     </div>
     <div class="stats">
-      <div class="s"><b>90<em>%</em></b><span>less payroll processing time at PostNL</span></div>
-      <div class="s"><b>60<em>%</em></b><span>efficiency gain on a PwC AI tool</span></div>
-      <div class="s"><b>13</b><span>months to transform HR at Somerset Council</span></div>
+      <div class="s"><b><span class="count" data-count="90">0</span><em>%</em></b><span>less payroll processing time at PostNL</span></div>
+      <div class="s"><b><span class="count" data-count="60">0</span><em>%</em></b><span>efficiency gain on a PwC AI tool</span></div>
+      <div class="s"><b><span class="count" data-count="13">0</span></b><span>months to transform HR at Somerset Council</span></div>
     </div>
   </div>
 </section>
@@ -340,7 +370,7 @@
     <div class="cases">
 
       <article class="case reveal">
-        <div class="metric">13 mo.<small>to a single HR and payroll platform for 8,500 employees</small></div>
+        <div class="metric"><span class="count" data-count="13">0</span> mo.<small>to a single HR and payroll platform for 8,500 employees</small></div>
         <div>
           <div class="co">Somerset Council</div>
           <p class="desc">Somerset Council modernised HR and payroll with <strong>SAP SuccessFactors and EPI-USE</strong>, consolidating onto one unified platform in a 13-month transformation.</p>
@@ -349,7 +379,7 @@
       </article>
 
       <article class="case reveal">
-        <div class="metric">60%<small>efficiency gain from an AI VAT tool for a pharma client</small></div>
+        <div class="metric"><span class="count" data-count="60">0</span>%<small>efficiency gain from an AI VAT tool for a pharma client</small></div>
         <div>
           <div class="co">PwC</div>
           <p class="desc">PwC built an <strong>AI-powered VAT tool</strong> that delivered a 60% efficiency gain for a pharmaceutical client, while consolidating more than 100 ERP systems with SAP.</p>
@@ -358,7 +388,7 @@
       </article>
 
       <article class="case reveal">
-        <div class="metric">90%<small>reduction in payroll processing time</small></div>
+        <div class="metric"><span class="count" data-count="90">0</span>%<small>reduction in payroll processing time</small></div>
         <div>
           <div class="co">PostNL</div>
           <p class="desc">PostNL combined <strong>Joule AI with SAP SuccessFactors Payroll</strong> to cut payroll processing time by 90%, freeing its HR team to focus on people rather than paperwork.</p>
@@ -384,7 +414,12 @@
     <div class="head reveal">
       <span class="eyebrow">Explore further</span>
       <h2>Resources to go deeper</h2>
-      <p>Official product pages, interactive demos, the latest releases, technical documentation, and free learning. Start with a demo, then dig into the detail.</p>
+      <p>Lead with product pages and interactive demos to open a conversation. Keep releases, documentation, and learning for when a team is evaluating in depth.</p>
+    </div>
+
+    <div class="res-tier">
+      <span class="t">For a first touch</span>
+      <span class="d">Product and demos. The most engaging place to start an outreach.</span>
     </div>
 
     <div class="res-grid">
@@ -415,6 +450,15 @@
           <li><a target="_blank" rel="noopener" href="https://www.sap.com/products/hcm/innovations.html"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>HCM innovations and AI roadmap</span></a></li>
         </ul>
       </article>
+
+    </div>
+
+    <div class="res-tier more">
+      <span class="t">For active evaluation</span>
+      <span class="d">Releases, technical documentation, and learning for when the prospect is comparing in detail.</span>
+    </div>
+
+    <div class="res-grid">
 
       <article class="res-card reveal">
         <div class="res-cat">
@@ -480,18 +524,46 @@
 
 <script>
   (function(){
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var reduce = !window.matchMedia || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var hasIO = "IntersectionObserver" in window;
+
+    /* Reveal on scroll */
     var items = document.querySelectorAll(".reveal");
-    if(reduce || !("IntersectionObserver" in window)){
+    if(reduce || !hasIO){
       items.forEach(function(el){el.classList.add("in");});
-      return;
+    } else {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+        });
+      },{threshold:.14});
+      items.forEach(function(el){io.observe(el);});
     }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
-      });
-    },{threshold:.14});
-    items.forEach(function(el){io.observe(el);});
+
+    /* Count-up numbers */
+    var counters = document.querySelectorAll(".count");
+    function animate(el){
+      var target = parseInt(el.getAttribute("data-count"),10) || 0;
+      var dur = 1300, start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target);
+        if(p < 1){ requestAnimationFrame(step); } else { el.textContent = target; }
+      }
+      requestAnimationFrame(step);
+    }
+    if(reduce || !hasIO){
+      counters.forEach(function(el){ el.textContent = el.getAttribute("data-count"); });
+    } else {
+      var cio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ animate(e.target); cio.unobserve(e.target); }
+        });
+      },{threshold:.6});
+      counters.forEach(function(el){ cio.observe(el); });
+    }
   })();
 </script>
 

@@ -43,11 +43,11 @@
   /* ---------- SAP logo ---------- */
   .sap-logo{display:inline-flex;align-items:center;}
   .sap-mark{
-    background:linear-gradient(118deg,#f0ab00 0%,#ffcb3d 55%,#f0ab00 100%);
+    background:linear-gradient(118deg,#0070f2 0%,#3f97ff 55%,#0062d6 100%);
     transform:skewX(-11deg);padding:5px 11px 6px;border-radius:3px;line-height:1;
-    box-shadow:0 1px 2px rgba(0,0,0,.12);
+    box-shadow:0 1px 3px rgba(0,112,242,.35);
   }
-  .sap-mark b{display:inline-block;transform:skewX(11deg);color:#0a2d5e;font-weight:800;font-size:20px;letter-spacing:.02em;}
+  .sap-mark b{display:inline-block;transform:skewX(11deg);color:#fff;font-weight:800;font-size:20px;letter-spacing:.02em;}
   .sap-mark.sm{padding:4px 9px 5px;}
   .sap-mark.sm b{font-size:16px;}
 
@@ -106,13 +106,13 @@
   .hero h1 .accent{color:#8fc0ff;}
   .hero .lede{font-size:clamp(17px,2vw,20px);color:#cdd8ee;max-width:58ch;margin-bottom:36px;font-weight:400;}
   .hero .actions{display:flex;gap:14px;flex-wrap:wrap;}
-  .hero .stats{display:flex;flex-wrap:wrap;margin-top:64px;padding-top:36px;border-top:1px solid rgba(255,255,255,.14);}
-  .hero .stats .s{position:relative;padding:2px 46px;}
+  .hero .stats{display:flex;flex-wrap:wrap;gap:0;margin-top:64px;padding-top:36px;border-top:1px solid rgba(255,255,255,.14);}
+  .hero .stats .s{position:relative;padding:0 48px;}
   .hero .stats .s:first-child{padding-left:0;}
-  .hero .stats .s + .s::before{content:"";position:absolute;left:0;top:6px;height:48px;width:1px;background:rgba(255,255,255,.16);}
-  .hero .stats .s b{display:flex;align-items:flex-start;font-size:50px;font-weight:800;letter-spacing:-.03em;color:#fff;line-height:1;font-variant-numeric:tabular-nums;}
-  .hero .stats .s b em{font-style:normal;font-size:.46em;font-weight:700;color:var(--gold);margin-left:4px;margin-top:.14em;}
-  .hero .stats .s span{display:block;font-size:14px;color:#aebdd8;margin-top:15px;max-width:24ch;line-height:1.5;}
+  .hero .stats .s + .s::before{content:"";position:absolute;left:0;top:4px;height:52px;width:1px;background:rgba(255,255,255,.15);}
+  .hero .stats .s b{display:block;font-size:52px;font-weight:800;letter-spacing:-.03em;color:#fff;line-height:1;font-variant-numeric:tabular-nums;}
+  .hero .stats .s b em{font-style:normal;font-size:28px;font-weight:700;color:#8fc0ff;vertical-align:baseline;margin-left:3px;}
+  .hero .stats .s span{display:block;font-size:14px;color:#aebdd8;margin-top:16px;max-width:24ch;line-height:1.5;}
   @media(max-width:700px){
     .hero .stats{flex-direction:column;gap:26px;}
     .hero .stats .s{padding:0;}

@@ -252,15 +252,29 @@
   .btn-assess:active{transform:translateY(1px);}
   .btn-assess.secondary{background:#fff;color:var(--blue);border:1.5px solid var(--blue);}
   .btn-assess.secondary:hover{background:#eaf3ff;}
-  .assess-result{display:none;margin-top:28px;background:var(--bg-soft);border-radius:12px;padding:24px 26px;border-left:4px solid var(--blue);}
+  .assess-result{display:none;margin-top:28px;background:var(--bg-soft);border-radius:12px;padding:28px 30px;border-left:4px solid var(--blue);}
   .assess-result.show{display:block;}
   .assess-result h4{font-size:18px;margin-bottom:8px;color:var(--navy);}
   .assess-result p{color:var(--text);font-size:15px;margin-bottom:14px;}
   .score-bar-wrap{background:#e3e9f2;border-radius:999px;height:10px;overflow:hidden;margin-bottom:6px;}
   .score-bar{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),#3f97ff);transition:width .8s cubic-bezier(.2,.7,.2,1);}
   .score-label{font-size:13px;color:var(--muted);margin-bottom:18px;}
-  .assess-sent{display:none;background:#eaf3ff;border:1.5px solid var(--blue);border-radius:10px;padding:16px 20px;margin-top:20px;font-size:15px;color:var(--blue);font-weight:600;}
+  .result-layout{display:grid;grid-template-columns:1fr 260px;gap:32px;align-items:center;margin-top:20px;}
+  @media(max-width:700px){.result-layout{grid-template-columns:1fr;}}
+  .dim-bars{display:flex;flex-direction:column;gap:12px;}
+  .dim-row{display:grid;grid-template-columns:1fr 120px 36px;gap:10px;align-items:center;}
+  .dim-row .dl{font-size:13px;color:var(--ink);font-weight:600;}
+  .dim-row .db{background:#e3e9f2;border-radius:999px;height:8px;overflow:hidden;}
+  .dim-row .df{height:100%;border-radius:999px;transition:width .9s cubic-bezier(.2,.7,.2,1);}
+  .dim-row .dv{font-size:12px;color:var(--muted);text-align:right;font-weight:600;}
+  .score-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:999px;font-weight:700;font-size:14px;margin-bottom:14px;}
+  .badge-low{background:#fff0f0;color:#c0392b;}
+  .badge-mid{background:#fff8e6;color:#9a6c00;}
+  .badge-high{background:#e8f8f0;color:#1a7a4a;}
+  .assess-sent{display:none;background:#e8f8f0;border:1.5px solid #1a7a4a;border-radius:10px;padding:16px 20px;margin-top:20px;font-size:15px;color:#1a7a4a;font-weight:600;}
   .assess-sent.show{display:block;}
+  .assess-error{display:none;background:#fff0f0;border:1.5px solid #c0392b;border-radius:10px;padding:16px 20px;margin-top:20px;font-size:15px;color:#c0392b;font-weight:600;}
+  .assess-error.show{display:block;}
   .cta{position:relative;overflow:hidden;color:#fff;background:var(--navy);text-align:center;}
   .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 440px at 50% -20%,rgba(0,112,242,.55),transparent 62%),linear-gradient(135deg,#05103a,#0a1b4d);}
   .cta .wrap{position:relative;z-index:2;padding:92px 28px;}
@@ -626,13 +640,6 @@
         </div>
       </div>
 
-      <div class="assess-result" id="overviewResult">
-        <h4 id="resultTitle">Your HR digital maturity score</h4>
-        <div class="score-bar-wrap"><div class="score-bar" id="scoreBar" style="width:0%"></div></div>
-        <p class="score-label" id="scoreLabel"></p>
-        <p id="resultText"></p>
-      </div>
-
       <hr class="assess-divider" />
 
       <!-- Part 2: Module deep-dive -->
@@ -729,14 +736,22 @@
       </div>
 
       <div class="assess-result" id="overviewResult">
+        <span class="score-badge" id="scoreBadge"></span>
         <h4 id="resultTitle">Your HR digital maturity score</h4>
         <div class="score-bar-wrap"><div class="score-bar" id="scoreBar" style="width:0%"></div></div>
         <p class="score-label" id="scoreLabel"></p>
-        <p id="resultText"></p>
+        <div class="result-layout">
+          <div class="dim-bars" id="dimBars"></div>
+          <div id="radarWrap"></div>
+        </div>
+        <p id="resultText" style="margin-top:18px;"></p>
       </div>
 
       <div class="assess-sent" id="sentMsg">
-        Your results have been prepared. Your email client will open with a pre-filled message to the SAP team.
+        Results sent directly to the SAP team. Marc will be in touch shortly.
+      </div>
+      <div class="assess-error" id="errMsg">
+        Something went wrong sending the results. Please try again or contact marc.delicado@sap.com directly.
       </div>
 
     </div>
@@ -766,33 +781,31 @@
 </footer>
 
 <script>
-  /* ---- reveal + count-up (existing) ---- */
+  /* ---- config ---- */
+  var W3F_KEY = "YOUR_WEB3FORMS_ACCESS_KEY"; // replace with key from web3forms.com
+
+  /* ---- reveal + count-up ---- */
   (function(){
     var reduce = !window.matchMedia || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var hasIO = "IntersectionObserver" in window;
     var items = document.querySelectorAll(".reveal");
-    if(reduce || !hasIO){ items.forEach(function(el){el.classList.add("in");}); }
-    else {
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);} });
+    if(reduce||!hasIO){items.forEach(function(el){el.classList.add("in");});}
+    else{
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});
       },{threshold:.14});
       items.forEach(function(el){io.observe(el);});
     }
-    var counters = document.querySelectorAll(".count");
-    function animate(el){
+    var counters=document.querySelectorAll(".count");
+    function animateCount(el){
       var target=parseInt(el.getAttribute("data-count"),10)||0,dur=1300,start=null;
-      function step(ts){
-        if(!start)start=ts;
-        var p=Math.min((ts-start)/dur,1),eased=1-Math.pow(1-p,3);
-        el.textContent=Math.round(eased*target);
-        if(p<1){requestAnimationFrame(step);}else{el.textContent=target;}
-      }
+      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(e*target);if(p<1)requestAnimationFrame(step);else el.textContent=target;}
       requestAnimationFrame(step);
     }
-    if(reduce||!hasIO){ counters.forEach(function(el){el.textContent=el.getAttribute("data-count");}); }
-    else {
+    if(reduce||!hasIO){counters.forEach(function(el){el.textContent=el.getAttribute("data-count");});}
+    else{
       var cio=new IntersectionObserver(function(entries){
-        entries.forEach(function(e){if(e.isIntersecting){animate(e.target);cio.unobserve(e.target);}});
+        entries.forEach(function(e){if(e.isIntersecting){animateCount(e.target);cio.unobserve(e.target);}});
       },{threshold:.6});
       counters.forEach(function(el){cio.observe(el);});
     }
@@ -801,70 +814,235 @@
   /* ---- module switcher ---- */
   function showModule(val){
     document.querySelectorAll(".module-qs").forEach(function(d){d.classList.remove("active");});
-    if(val){ var el=document.getElementById("mod-"+val); if(el) el.classList.add("active"); }
+    if(val){var el=document.getElementById("mod-"+val);if(el)el.classList.add("active");}
   }
 
-  /* ---- score labels ---- */
-  var overviewFields = ["q_recruit","q_onboard","q_learning","q_feedback","q_analytics","q_dash"];
+  /* ---- data ---- */
+  var DIM_FIELDS = ["q_recruit","q_onboard","q_learning","q_feedback","q_analytics","q_dash"];
+  var DIM_LABELS = ["Recruitment","Onboarding","Learning","Feedback","Analytics","Dashboards"];
+  var DIM_COLORS = ["#0070f2","#1a90ff","#3da8ff","#0058c6","#0040a0","#002d7a"];
+
   function getVal(name){
     var el=document.querySelector("input[name='"+name+"']:checked");
-    if(!el) return 0;
-    return parseInt(el.value.charAt(0)) || 0;
+    if(!el)return 0;
+    var v=el.value;
+    if(v.charAt(0)==="0")return 0;
+    if(v.charAt(0)==="1")return 1;
+    if(v.charAt(0)==="2")return 2;
+    return 0;
   }
+
+  /* ---- radar chart SVG ---- */
+  function buildRadar(scores){
+    var cx=130,cy=130,r=95,n=6;
+    var angles=DIM_LABELS.map(function(_,i){return(i*2*Math.PI/n)-Math.PI/2;});
+    function pt(ratio,i){return{x:cx+r*ratio*Math.cos(angles[i]),y:cy+r*ratio*Math.sin(angles[i])};}
+    var gridSvg="";
+    [0.33,0.66,1].forEach(function(lv){
+      var pts=angles.map(function(_,i){var p=pt(lv,i);return p.x+","+p.y;}).join(" ");
+      gridSvg+='<polygon points="'+pts+'" fill="none" stroke="#e3e9f0" stroke-width="1"/>';
+    });
+    var axesSvg=angles.map(function(a){
+      return '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r*Math.cos(a))+'" y2="'+(cy+r*Math.sin(a))+'" stroke="#e3e9f0" stroke-width="1"/>';
+    }).join("");
+    var dataPts=scores.map(function(s,i){var ratio=s/2,p=pt(ratio||0.04,i);return p.x+","+p.y;}).join(" ");
+    var dotsSvg=scores.map(function(s,i){var ratio=s/2,p=pt(ratio||0.04,i);return'<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="#0070f2"/>';}).join("");
+    var labelSvg=DIM_LABELS.map(function(l,i){
+      var p=pt(1.28,i);
+      return'<text x="'+p.x+'" y="'+p.y+'" text-anchor="middle" dominant-baseline="middle" font-size="10.5" fill="#5b6b7f" font-family="Inter,sans-serif">'+l+'</text>';
+    }).join("");
+    return'<svg width="260" height="260" viewBox="0 0 260 260">'+gridSvg+axesSvg+'<polygon points="'+dataPts+'" fill="rgba(0,112,242,0.12)" stroke="#0070f2" stroke-width="2"/>'+dotsSvg+labelSvg+'</svg>';
+  }
+
+  /* ---- dim bar ---- */
+  function barColor(v){return v===0?"#e3e9f2":v===1?"#3f97ff":"#0058c6";}
+  function barLabel(v){return v===0?"Not in place":v===1?"Partial":"In place";}
+
+  /* ---- show results on page ---- */
   function calcScore(){
-    var total=0, max=overviewFields.length*2;
-    overviewFields.forEach(function(f){ total+=getVal(f); });
+    var scores=DIM_FIELDS.map(function(f){return getVal(f);});
+    var total=scores.reduce(function(a,b){return a+b;},0);
+    var max=DIM_FIELDS.length*2;
     var pct=Math.round((total/max)*100);
-    var level = pct<=33 ? "Early stage" : pct<=66 ? "Developing" : "Advanced";
-    var desc = pct<=33
-      ? "Your organisation is at the start of its HR digital journey. SAP SuccessFactors can help you build the foundation with modern, integrated HR and payroll."
-      : pct<=66
-      ? "You have solid foundations in place. AI-enabled features in SAP SuccessFactors can help you accelerate across recruitment, payroll, and workforce planning."
-      : "You are operating at an advanced level. Agentic AI and Joule can help you unlock the next wave of efficiency and employee experience improvements.";
-    document.getElementById("resultTitle").textContent = level+" ("+pct+"%)";
-    document.getElementById("scoreBar").style.width = pct+"%";
-    document.getElementById("scoreLabel").textContent = total+" out of "+max+" points";
-    document.getElementById("resultText").textContent = desc;
+    var level=pct<=33?"Early stage":pct<=66?"Developing":"Advanced";
+    var badgeClass=pct<=33?"badge-low":pct<=66?"badge-mid":"badge-high";
+    var desc=pct<=33
+      ?"Your company is at the beginning of its HR digital journey. SAP SuccessFactors can help establish modern, integrated HR foundations quickly."
+      :pct<=66
+      ?"You have solid foundations in place. SAP AI can help you accelerate across recruitment, payroll automation, and workforce planning."
+      :"You are operating at an advanced level. Agentic AI and Joule can unlock the next wave of efficiency and employee experience improvements.";
+
+    var badge=document.getElementById("scoreBadge");
+    badge.textContent=level+": "+pct+"%";
+    badge.className="score-badge "+badgeClass;
+    document.getElementById("resultTitle").textContent="Overall HR Digital Maturity";
+    document.getElementById("scoreBar").style.width=pct+"%";
+    document.getElementById("scoreLabel").textContent=total+" out of "+max+" points";
+    document.getElementById("resultText").textContent=desc;
+
+    /* dim bars */
+    var barsHtml=scores.map(function(s,i){
+      var w=Math.round((s/2)*100);
+      return'<div class="dim-row">'
+        +'<span class="dl">'+DIM_LABELS[i]+'</span>'
+        +'<div class="db"><div class="df" style="width:'+w+'%;background:'+barColor(s)+';"></div></div>'
+        +'<span class="dv">'+barLabel(s)+'</span>'
+        +'</div>';
+    }).join("");
+    document.getElementById("dimBars").innerHTML=barsHtml;
+
+    /* radar */
+    document.getElementById("radarWrap").innerHTML=buildRadar(scores);
+
     var r=document.getElementById("overviewResult");
     r.classList.add("show");
-    r.scrollIntoView({behavior:"smooth",block:"nearest"});
+    setTimeout(function(){r.scrollIntoView({behavior:"smooth",block:"nearest"});},100);
   }
 
-  /* ---- collect all answers ---- */
-  function collectAll(){
-    var lines=[];
-    var name=document.getElementById("aName").value||"(not provided)";
-    var company=document.getElementById("aCompany").value||"(not provided)";
-    lines.push("NAME: "+name);
-    lines.push("COMPANY: "+company);
-    lines.push("");
-    lines.push("--- PART 1: OVERVIEW ---");
-    var labels={"q_recruit":"Digital recruitment","q_onboard":"Personalised onboarding","q_learning":"Continuous learning","q_feedback":"Always-on feedback","q_analytics":"People Analytics","q_dash":"Live dashboards"};
-    overviewFields.forEach(function(f){
-      var el=document.querySelector("input[name='"+f+"']:checked");
-      lines.push((labels[f]||f)+": "+(el?el.value:"No answer"));
-    });
-    lines.push("");
-    var mod=document.getElementById("modSelect").value;
+  /* ---- build HTML email for Marc ---- */
+  function buildEmailHtml(name,company,scores,total,pct,level,mod,modLabel){
+    var dateStr=new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+    var badgeColor=pct<=33?"#c0392b":pct<=66?"#9a6c00":"#1a7a4a";
+    var badgeBg=pct<=33?"#fff0f0":pct<=66?"#fff8e6":"#e8f8f0";
+
+    var dimRows=scores.map(function(s,i){
+      var w=Math.round((s/2)*100);
+      var col=s===0?"#c0392b":s===1?"#f0ab00":"#1a7a4a";
+      var lbl=s===0?"Not in place":s===1?"Partially in place":"Fully in place";
+      return'<tr>'
+        +'<td style="padding:8px 12px 8px 0;font-size:14px;color:#1a2b42;font-weight:600;white-space:nowrap;width:160px;">'+DIM_LABELS[i]+'</td>'
+        +'<td style="padding:8px 0;width:180px;">'
+          +'<table cellpadding="0" cellspacing="0" width="180" style="background:#e3e9f2;border-radius:6px;overflow:hidden;">'
+            +'<tr><td style="width:'+w+'%;background:'+col+';height:10px;border-radius:6px;">&nbsp;</td>'
+            +(w<100?'<td style="width:'+(100-w)+'%;">&nbsp;</td>':'')
+            +'</tr></table>'
+        +'</td>'
+        +'<td style="padding:8px 0 8px 12px;font-size:13px;color:'+col+';font-weight:600;">'+lbl+'</td>'
+        +'</tr>';
+    }).join("");
+
+    var modSection="";
     if(mod){
-      lines.push("--- PART 2: MODULE: "+document.getElementById("modSelect").options[document.getElementById("modSelect").selectedIndex].text+" ---");
-      document.querySelectorAll("#mod-"+mod+" input[type=radio]:checked").forEach(function(inp){
-        var qLabel=inp.closest(".assess-q").querySelector(".ql").textContent;
-        lines.push(qLabel+": "+inp.value);
+      var modRows="";
+      document.querySelectorAll("#mod-"+mod+" input[type=radio]:checked").forEach(function(inp,idx){
+        var q=inp.closest(".assess-q").querySelector(".ql").textContent;
+        modRows+='<tr style="background:'+(idx%2===0?"#f5f6f7":"#fff")+'">'
+          +'<td style="padding:10px 14px;font-size:14px;color:#1a2b42;">'+q+'</td>'
+          +'<td style="padding:10px 14px;font-size:14px;color:#0070f2;font-weight:600;">'+inp.value+'</td>'
+          +'</tr>';
       });
+      if(modRows){
+        modSection='<h3 style="font-size:16px;color:#05103a;margin:32px 0 12px;border-bottom:2px solid #e3e9f0;padding-bottom:8px;">PART 2: '+modLabel.toUpperCase()+'</h3>'
+          +'<table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid #e3e9f0;border-radius:8px;overflow:hidden;">'
+          +'<thead><tr style="background:#05103a;">'
+          +'<th style="padding:10px 14px;text-align:left;font-size:13px;color:#fff;font-weight:700;">Question</th>'
+          +'<th style="padding:10px 14px;text-align:left;font-size:13px;color:#fff;font-weight:700;">Answer</th>'
+          +'</tr></thead><tbody>'+modRows+'</tbody></table>';
+      }
     }
-    return lines.join("\n");
+
+    return'<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f5f6f7;font-family:Arial,sans-serif;">'
+      +'<table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f6f7;padding:32px 0;">'
+      +'<tr><td align="center">'
+      +'<table width="620" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">'
+
+      /* Header */
+      +'<tr><td style="background:linear-gradient(135deg,#05103a,#0a1b4d);padding:28px 36px;">'
+      +'<table width="100%"><tr>'
+      +'<td><span style="display:inline-block;background:#0070f2;color:#fff;font-weight:800;font-size:16px;padding:5px 11px;border-radius:3px;transform:skewX(-11deg);letter-spacing:.02em;">SAP</span>'
+      +'<span style="color:#ffffff;font-size:16px;font-weight:700;margin-left:12px;vertical-align:middle;">SuccessFactors</span></td>'
+      +'<td align="right"><span style="color:#9fb2d6;font-size:13px;">'+dateStr+'</span></td>'
+      +'</tr></table>'
+      +'<h1 style="color:#ffffff;font-size:22px;margin:16px 0 4px;">HR Digital Maturity Assessment</h1>'
+      +'<p style="color:#cdd8ee;font-size:15px;margin:0;">Submitted by <strong style="color:#fff;">'+name+'</strong>'+(company?' at <strong style="color:#fff;">'+company+'</strong>':'')+'</p>'
+      +'</td></tr>'
+
+      /* Score */
+      +'<tr><td style="padding:28px 36px 20px;">'
+      +'<table width="100%" style="background:'+badgeBg+';border-radius:10px;padding:0;" cellpadding="0" cellspacing="0"><tr>'
+      +'<td style="padding:18px 24px;">'
+      +'<span style="font-size:13px;font-weight:700;color:'+badgeColor+';text-transform:uppercase;letter-spacing:.1em;">'+level+'</span>'
+      +'<div style="font-size:42px;font-weight:800;color:'+badgeColor+';line-height:1;margin:6px 0 4px;">'+pct+'<span style="font-size:22px;">%</span></div>'
+      +'<div style="font-size:14px;color:#5b6b7f;">'+total+' out of '+(DIM_FIELDS.length*2)+' points across 6 HR capability areas</div>'
+      +'</td></tr></table>'
+      +'</td></tr>'
+
+      /* Part 1 bars */
+      +'<tr><td style="padding:0 36px 28px;">'
+      +'<h3 style="font-size:16px;color:#05103a;margin:0 0 16px;border-bottom:2px solid #e3e9f0;padding-bottom:8px;">PART 1: HR CAPABILITY OVERVIEW</h3>'
+      +'<table width="100%" cellpadding="0" cellspacing="0">'+dimRows+'</table>'
+      +'</td></tr>'
+
+      /* Part 2 */
+      +(modSection?'<tr><td style="padding:0 36px 28px;">'+modSection+'</td></tr>':"")
+
+      /* Footer */
+      +'<tr><td style="background:#f5f6f7;padding:20px 36px;border-top:1px solid #e3e9f0;">'
+      +'<p style="font-size:13px;color:#9fb2d6;margin:0;">This assessment was submitted via the SAP SuccessFactors AI microsite. SAP, SuccessFactors and Joule are trademarks of SAP SE.</p>'
+      +'</td></tr>'
+
+      +'</table>'
+      +'</td></tr></table>'
+      +'</body></html>';
   }
 
-  /* ---- send via mailto ---- */
+  /* ---- send via Web3Forms ---- */
   function sendResults(){
-    var body=collectAll();
-    var name=document.getElementById("aName").value||"HR Leader";
+    var name=document.getElementById("aName").value||"(not provided)";
     var company=document.getElementById("aCompany").value||"";
-    var subject="HR Digital Maturity Assessment"+(company?" – "+company:"")+" (from SAP SuccessFactors microsite)";
-    var mailto="mailto:marc.delicado@sap.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-    window.location.href=mailto;
-    document.getElementById("sentMsg").classList.add("show");
+    var scores=DIM_FIELDS.map(function(f){return getVal(f);});
+    var total=scores.reduce(function(a,b){return a+b;},0);
+    var pct=Math.round((total/(DIM_FIELDS.length*2))*100);
+    var level=pct<=33?"Early stage":pct<=66?"Developing":"Advanced";
+    var modEl=document.getElementById("modSelect");
+    var mod=modEl.value;
+    var modLabel=mod?modEl.options[modEl.selectedIndex].text:"";
+    var htmlBody=buildEmailHtml(name,company,scores,total,pct,level,mod,modLabel);
+
+    var btn=document.querySelector(".btn-assess.secondary");
+    btn.textContent="Sending...";
+    btn.disabled=true;
+
+    if(W3F_KEY==="YOUR_WEB3FORMS_ACCESS_KEY"){
+      /* fallback: open mailto so nothing is lost while key is not yet set */
+      var subject="SAP HR Assessment: "+name+(company?" at "+company:"")+" ("+pct+"% - "+level+")";
+      var body="From: "+name+(company?"\nCompany: "+company:"")+"\nScore: "+pct+"% ("+level+")\n\n";
+      DIM_FIELDS.forEach(function(f,i){
+        var s=scores[i];body+=DIM_LABELS[i]+": "+(s===0?"Not in place":s===1?"Partially":"In place")+"\n";
+      });
+      if(mod){body+="\nModule: "+modLabel+"\n";
+        document.querySelectorAll("#mod-"+mod+" input[type=radio]:checked").forEach(function(inp){
+          body+=inp.closest(".assess-q").querySelector(".ql").textContent+"\n> "+inp.value+"\n";
+        });
+      }
+      window.location.href="mailto:marc.delicado@sap.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+      btn.textContent="Send results to SAP";btn.disabled=false;
+      document.getElementById("sentMsg").textContent="Your email client opened with the results. Please send the pre-filled email to complete the submission.";
+      document.getElementById("sentMsg").classList.add("show");
+      return;
+    }
+
+    fetch("https://api.web3forms.com/submit",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({
+        access_key:W3F_KEY,
+        subject:"SAP HR Assessment: "+name+(company?" at "+company:"")+" ("+pct+"% - "+level+")",
+        from_name:name+(company?" / "+company:""),
+        html:htmlBody,
+        botcheck:""
+      })
+    }).then(function(r){return r.json();}).then(function(data){
+      btn.textContent="Send results to SAP";btn.disabled=false;
+      if(data.success){
+        document.getElementById("sentMsg").classList.add("show");
+      } else {
+        document.getElementById("errMsg").classList.add("show");
+      }
+    }).catch(function(){
+      btn.textContent="Send results to SAP";btn.disabled=false;
+      document.getElementById("errMsg").classList.add("show");
+    });
   }
 </script>
 </body>

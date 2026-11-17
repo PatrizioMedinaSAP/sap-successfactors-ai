@@ -1029,7 +1029,7 @@
         access_key:W3F_KEY,
         subject:"SAP HR Assessment: "+name+(company?" at "+company:"")+" ("+pct+"% - "+level+")",
         from_name:name+(company?" / "+company:""),
-        html:htmlBody,
+        message:htmlBody,
         botcheck:""
       })
     }).then(function(r){return r.json();}).then(function(data){

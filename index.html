@@ -899,94 +899,7 @@
     setTimeout(function(){r.scrollIntoView({behavior:"smooth",block:"nearest"});},100);
   }
 
-  /* ---- build HTML email for Marc ---- */
-  function buildEmailHtml(name,company,scores,total,pct,level,mod,modLabel){
-    var dateStr=new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
-    var badgeColor=pct<=33?"#c0392b":pct<=66?"#9a6c00":"#1a7a4a";
-    var badgeBg=pct<=33?"#fff0f0":pct<=66?"#fff8e6":"#e8f8f0";
-
-    var dimRows=scores.map(function(s,i){
-      var w=Math.round((s/2)*100);
-      var col=s===0?"#c0392b":s===1?"#f0ab00":"#1a7a4a";
-      var lbl=s===0?"Not in place":s===1?"Partially in place":"Fully in place";
-      return'<tr>'
-        +'<td style="padding:8px 12px 8px 0;font-size:14px;color:#1a2b42;font-weight:600;white-space:nowrap;width:160px;">'+DIM_LABELS[i]+'</td>'
-        +'<td style="padding:8px 0;width:180px;">'
-          +'<table cellpadding="0" cellspacing="0" width="180" style="background:#e3e9f2;border-radius:6px;overflow:hidden;">'
-            +'<tr><td style="width:'+w+'%;background:'+col+';height:10px;border-radius:6px;">&nbsp;</td>'
-            +(w<100?'<td style="width:'+(100-w)+'%;">&nbsp;</td>':'')
-            +'</tr></table>'
-        +'</td>'
-        +'<td style="padding:8px 0 8px 12px;font-size:13px;color:'+col+';font-weight:600;">'+lbl+'</td>'
-        +'</tr>';
-    }).join("");
-
-    var modSection="";
-    if(mod){
-      var modRows="";
-      document.querySelectorAll("#mod-"+mod+" input[type=radio]:checked").forEach(function(inp,idx){
-        var q=inp.closest(".assess-q").querySelector(".ql").textContent;
-        modRows+='<tr style="background:'+(idx%2===0?"#f5f6f7":"#fff")+'">'
-          +'<td style="padding:10px 14px;font-size:14px;color:#1a2b42;">'+q+'</td>'
-          +'<td style="padding:10px 14px;font-size:14px;color:#0070f2;font-weight:600;">'+inp.value+'</td>'
-          +'</tr>';
-      });
-      if(modRows){
-        modSection='<h3 style="font-size:16px;color:#05103a;margin:32px 0 12px;border-bottom:2px solid #e3e9f0;padding-bottom:8px;">PART 2: '+modLabel.toUpperCase()+'</h3>'
-          +'<table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid #e3e9f0;border-radius:8px;overflow:hidden;">'
-          +'<thead><tr style="background:#05103a;">'
-          +'<th style="padding:10px 14px;text-align:left;font-size:13px;color:#fff;font-weight:700;">Question</th>'
-          +'<th style="padding:10px 14px;text-align:left;font-size:13px;color:#fff;font-weight:700;">Answer</th>'
-          +'</tr></thead><tbody>'+modRows+'</tbody></table>';
-      }
-    }
-
-    return'<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f5f6f7;font-family:Arial,sans-serif;">'
-      +'<table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f6f7;padding:32px 0;">'
-      +'<tr><td align="center">'
-      +'<table width="620" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">'
-
-      /* Header */
-      +'<tr><td style="background:linear-gradient(135deg,#05103a,#0a1b4d);padding:28px 36px;">'
-      +'<table width="100%"><tr>'
-      +'<td><span style="display:inline-block;background:#0070f2;color:#fff;font-weight:800;font-size:16px;padding:5px 11px;border-radius:3px;transform:skewX(-11deg);letter-spacing:.02em;">SAP</span>'
-      +'<span style="color:#ffffff;font-size:16px;font-weight:700;margin-left:12px;vertical-align:middle;">SuccessFactors</span></td>'
-      +'<td align="right"><span style="color:#9fb2d6;font-size:13px;">'+dateStr+'</span></td>'
-      +'</tr></table>'
-      +'<h1 style="color:#ffffff;font-size:22px;margin:16px 0 4px;">HR Digital Maturity Assessment</h1>'
-      +'<p style="color:#cdd8ee;font-size:15px;margin:0;">Submitted by <strong style="color:#fff;">'+name+'</strong>'+(company?' at <strong style="color:#fff;">'+company+'</strong>':'')+'</p>'
-      +'</td></tr>'
-
-      /* Score */
-      +'<tr><td style="padding:28px 36px 20px;">'
-      +'<table width="100%" style="background:'+badgeBg+';border-radius:10px;padding:0;" cellpadding="0" cellspacing="0"><tr>'
-      +'<td style="padding:18px 24px;">'
-      +'<span style="font-size:13px;font-weight:700;color:'+badgeColor+';text-transform:uppercase;letter-spacing:.1em;">'+level+'</span>'
-      +'<div style="font-size:42px;font-weight:800;color:'+badgeColor+';line-height:1;margin:6px 0 4px;">'+pct+'<span style="font-size:22px;">%</span></div>'
-      +'<div style="font-size:14px;color:#5b6b7f;">'+total+' out of '+(DIM_FIELDS.length*2)+' points across 6 HR capability areas</div>'
-      +'</td></tr></table>'
-      +'</td></tr>'
-
-      /* Part 1 bars */
-      +'<tr><td style="padding:0 36px 28px;">'
-      +'<h3 style="font-size:16px;color:#05103a;margin:0 0 16px;border-bottom:2px solid #e3e9f0;padding-bottom:8px;">PART 1: HR CAPABILITY OVERVIEW</h3>'
-      +'<table width="100%" cellpadding="0" cellspacing="0">'+dimRows+'</table>'
-      +'</td></tr>'
-
-      /* Part 2 */
-      +(modSection?'<tr><td style="padding:0 36px 28px;">'+modSection+'</td></tr>':"")
-
-      /* Footer */
-      +'<tr><td style="background:#f5f6f7;padding:20px 36px;border-top:1px solid #e3e9f0;">'
-      +'<p style="font-size:13px;color:#9fb2d6;margin:0;">This assessment was submitted via the SAP SuccessFactors AI microsite. SAP, SuccessFactors and Joule are trademarks of SAP SE.</p>'
-      +'</td></tr>'
-
-      +'</table>'
-      +'</td></tr></table>'
-      +'</body></html>';
-  }
-
-  /* ---- send via Web3Forms ---- */
+  /* ---- send via mailto ---- */
   function sendResults(){
     var name=document.getElementById("aName").value||"(not provided)";
     var company=document.getElementById("aCompany").value||"";
@@ -997,52 +910,31 @@
     var modEl=document.getElementById("modSelect");
     var mod=modEl.value;
     var modLabel=mod?modEl.options[modEl.selectedIndex].text:"";
-    var htmlBody=buildEmailHtml(name,company,scores,total,pct,level,mod,modLabel);
+    var lbl=function(s){return s===0?"Not in place":s===1?"Partially in place":"Fully in place";};
 
-    var btn=document.querySelector(".btn-assess.secondary");
-    btn.textContent="Sending...";
-    btn.disabled=true;
-
-    if(W3F_KEY==="YOUR_WEB3FORMS_ACCESS_KEY"){
-      /* fallback: open mailto so nothing is lost while key is not yet set */
-      var subject="SAP HR Assessment: "+name+(company?" at "+company:"")+" ("+pct+"% - "+level+")";
-      var body="From: "+name+(company?"\nCompany: "+company:"")+"\nScore: "+pct+"% ("+level+")\n\n";
-      DIM_FIELDS.forEach(function(f,i){
-        var s=scores[i];body+=DIM_LABELS[i]+": "+(s===0?"Not in place":s===1?"Partially":"In place")+"\n";
+    var lines=[];
+    lines.push("Contact: "+name);
+    if(company) lines.push("Company: "+company);
+    lines.push("Score: "+pct+"% - "+level+" ("+total+"/"+(DIM_FIELDS.length*2)+" points)");
+    lines.push("");
+    lines.push("HR CAPABILITY OVERVIEW");
+    scores.forEach(function(s,i){
+      lines.push("  "+DIM_LABELS[i]+": "+lbl(s));
+    });
+    if(mod){
+      lines.push("");
+      lines.push("MODULE: "+modLabel);
+      var qi=0;
+      document.querySelectorAll("#mod-"+mod+" input[type=radio]:checked").forEach(function(inp){
+        qi++;
+        lines.push("  Q"+qi+": "+inp.closest(".assess-q").querySelector(".ql").textContent);
+        lines.push("       "+inp.value);
       });
-      if(mod){body+="\nModule: "+modLabel+"\n";
-        document.querySelectorAll("#mod-"+mod+" input[type=radio]:checked").forEach(function(inp){
-          body+=inp.closest(".assess-q").querySelector(".ql").textContent+"\n> "+inp.value+"\n";
-        });
-      }
-      window.location.href="mailto:marc.delicado@sap.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-      btn.textContent="Send results to SAP";btn.disabled=false;
-      document.getElementById("sentMsg").textContent="Your email client opened with the results. Please send the pre-filled email to complete the submission.";
-      document.getElementById("sentMsg").classList.add("show");
-      return;
     }
 
-    fetch("https://api.web3forms.com/submit",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify({
-        access_key:W3F_KEY,
-        subject:"SAP HR Assessment: "+name+(company?" at "+company:"")+" ("+pct+"% - "+level+")",
-        from_name:name+(company?" / "+company:""),
-        message:htmlBody,
-        botcheck:""
-      })
-    }).then(function(r){return r.json();}).then(function(data){
-      btn.textContent="Send results to SAP";btn.disabled=false;
-      if(data.success){
-        document.getElementById("sentMsg").classList.add("show");
-      } else {
-        document.getElementById("errMsg").classList.add("show");
-      }
-    }).catch(function(){
-      btn.textContent="Send results to SAP";btn.disabled=false;
-      document.getElementById("errMsg").classList.add("show");
-    });
+    var subject="SAP HR Assessment: "+name+(company?" at "+company:"")+" ("+pct+"% - "+level+")";
+    window.location.href="mailto:marc.delicado@sap.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(lines.join("\n"));
+    document.getElementById("sentMsg").classList.add("show");
   }
 </script>
 </body>

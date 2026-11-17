@@ -136,7 +136,12 @@
   .type:hover{border-color:#c9d6ea;box-shadow:0 14px 34px rgba(5,16,58,.09);transform:translateY(-3px);}
   .type .ic{width:52px;height:52px;border-radius:12px;background:#eaf3ff;display:flex;align-items:center;justify-content:center;margin-bottom:22px;}
   .type .ic svg{width:26px;height:26px;stroke:var(--blue);fill:none;stroke-width:1.6;}
-  .type .no{position:absolute;top:30px;right:30px;font-size:14px;font-weight:700;color:#c3ccd8;}
+  .type .no{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    font-size:108px;font-weight:800;color:#e8ecf2;line-height:1;
+    letter-spacing:-.04em;pointer-events:none;user-select:none;z-index:0;
+  }
+  .type .ic,.type .tag,.type h3,.type p,.type .ex{position:relative;z-index:1;}
   .type h3{font-size:21px;margin-bottom:6px;}
   .type .tag{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
   .type p{color:var(--text);font-size:15.5px;margin-bottom:16px;}
@@ -207,7 +212,55 @@
   .res-tier .t::before{content:"";width:22px;height:2px;background:var(--gold);}
   .res-tier .d{font-size:14.5px;color:var(--muted);}
 
-  /* ---------- CTA ---------- */
+  /* ---------- assessment ---------- */
+  .assess-intro{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-bottom:52px;}
+  @media(max-width:820px){.assess-intro{grid-template-columns:1fr;gap:28px;}}
+  .assess-intro h3{font-size:22px;margin-bottom:10px;}
+  .assess-intro p{color:var(--text);font-size:16px;}
+  .assess-form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:36px 32px;}
+  .assess-form h3{font-size:20px;margin-bottom:6px;}
+  .assess-form .sub{font-size:14.5px;color:var(--muted);margin-bottom:28px;}
+  .assess-q{margin-bottom:22px;}
+  .assess-q label.ql{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;}
+  .radio-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .radio-row label{
+    display:flex;align-items:center;gap:7px;cursor:pointer;
+    background:var(--bg-soft);border:1.5px solid var(--line);border-radius:8px;
+    padding:8px 14px;font-size:14px;color:var(--ink);transition:border-color .18s,background .18s;
+  }
+  .radio-row input[type=radio]{accent-color:var(--blue);width:15px;height:15px;cursor:pointer;}
+  .radio-row label:has(input:checked){border-color:var(--blue);background:#eaf3ff;color:var(--blue);font-weight:600;}
+  .assess-divider{border:none;border-top:1px solid var(--line);margin:32px 0;}
+  .assess-module-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px;}
+  .assess-module-head label{font-size:15px;font-weight:600;color:var(--ink);}
+  select.mod-pick{
+    appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235b6b7f' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 12px center;
+    border:1.5px solid var(--line);border-radius:8px;padding:9px 36px 9px 14px;
+    font-size:15px;color:var(--ink);cursor:pointer;min-width:240px;transition:border-color .18s;
+  }
+  select.mod-pick:focus{outline:none;border-color:var(--blue);}
+  .module-qs{display:none;}
+  .module-qs.active{display:block;}
+  .module-title{font-size:15px;font-weight:700;color:var(--blue);margin-bottom:20px;letter-spacing:.04em;text-transform:uppercase;}
+  .assess-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;}
+  .btn-assess{
+    display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+    padding:13px 26px;border-radius:8px;font-weight:700;font-size:15px;
+    background:var(--blue);color:#fff;transition:background .2s,transform .12s;font-family:inherit;
+  }
+  .btn-assess:hover{background:var(--blue-dark);}
+  .btn-assess:active{transform:translateY(1px);}
+  .btn-assess.secondary{background:#fff;color:var(--blue);border:1.5px solid var(--blue);}
+  .btn-assess.secondary:hover{background:#eaf3ff;}
+  .assess-result{display:none;margin-top:28px;background:var(--bg-soft);border-radius:12px;padding:24px 26px;border-left:4px solid var(--blue);}
+  .assess-result.show{display:block;}
+  .assess-result h4{font-size:18px;margin-bottom:8px;color:var(--navy);}
+  .assess-result p{color:var(--text);font-size:15px;margin-bottom:14px;}
+  .score-bar-wrap{background:#e3e9f2;border-radius:999px;height:10px;overflow:hidden;margin-bottom:6px;}
+  .score-bar{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),#3f97ff);transition:width .8s cubic-bezier(.2,.7,.2,1);}
+  .score-label{font-size:13px;color:var(--muted);margin-bottom:18px;}
+  .assess-sent{display:none;background:#eaf3ff;border:1.5px solid var(--blue);border-radius:10px;padding:16px 20px;margin-top:20px;font-size:15px;color:var(--blue);font-weight:600;}
+  .assess-sent.show{display:block;}
   .cta{position:relative;overflow:hidden;color:#fff;background:var(--navy);text-align:center;}
   .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 440px at 50% -20%,rgba(0,112,242,.55),transparent 62%),linear-gradient(135deg,#05103a,#0a1b4d);}
   .cta .wrap{position:relative;z-index:2;padding:92px 28px;}
@@ -266,6 +319,7 @@
       <a href="#usecases">Use cases</a>
       <a href="#cases">Customers</a>
       <a href="#resources">Resources</a>
+      <a href="#assessment">Assessment</a>
     </nav>
     <a class="btn btn-primary" href="#cta">Talk to SAP</a>
   </div>
@@ -508,6 +562,187 @@
   </div>
 </section>
 
+<!-- ASSESSMENT -->
+<section class="section" id="assessment">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">For HR leaders</span>
+      <h2>HR Digital Maturity Self-Assessment</h2>
+      <p>Rate your organisation across key HR capability areas and receive a summary with your score directly to your inbox.</p>
+    </div>
+
+    <div class="assess-form reveal">
+
+      <!-- Part 1: Quick overview -->
+      <h3>Part 1: Quick overview</h3>
+      <p class="sub">Rate each area: 0 = Not started, 1 = Basic, 2 = Advanced</p>
+
+      <div class="assess-q">
+        <label class="ql">Digital recruitment</label>
+        <div class="radio-row">
+          <label><input type="radio" name="q_recruit" value="0 – Not started"> 0 – Not started</label>
+          <label><input type="radio" name="q_recruit" value="1 – Basic"> 1 – Basic</label>
+          <label><input type="radio" name="q_recruit" value="2 – Advanced"> 2 – Advanced</label>
+        </div>
+      </div>
+      <div class="assess-q">
+        <label class="ql">Personalised onboarding</label>
+        <div class="radio-row">
+          <label><input type="radio" name="q_onboard" value="0 – Not started"> 0 – Not started</label>
+          <label><input type="radio" name="q_onboard" value="1 – Basic"> 1 – Basic</label>
+          <label><input type="radio" name="q_onboard" value="2 – Advanced"> 2 – Advanced</label>
+        </div>
+      </div>
+      <div class="assess-q">
+        <label class="ql">Continuous learning culture</label>
+        <div class="radio-row">
+          <label><input type="radio" name="q_learning" value="0 – Not started"> 0 – Not started</label>
+          <label><input type="radio" name="q_learning" value="1 – Basic"> 1 – Basic</label>
+          <label><input type="radio" name="q_learning" value="2 – Advanced"> 2 – Advanced</label>
+        </div>
+      </div>
+      <div class="assess-q">
+        <label class="ql">Always-on feedback</label>
+        <div class="radio-row">
+          <label><input type="radio" name="q_feedback" value="0 – Not started"> 0 – Not started</label>
+          <label><input type="radio" name="q_feedback" value="1 – Basic"> 1 – Basic</label>
+          <label><input type="radio" name="q_feedback" value="2 – Advanced"> 2 – Advanced</label>
+        </div>
+      </div>
+      <div class="assess-q">
+        <label class="ql">Proactive People Analytics</label>
+        <div class="radio-row">
+          <label><input type="radio" name="q_analytics" value="0 – Not started"> 0 – Not started</label>
+          <label><input type="radio" name="q_analytics" value="1 – Basic"> 1 – Basic</label>
+          <label><input type="radio" name="q_analytics" value="2 – Advanced"> 2 – Advanced</label>
+        </div>
+      </div>
+      <div class="assess-q">
+        <label class="ql">Live dashboards</label>
+        <div class="radio-row">
+          <label><input type="radio" name="q_dash" value="0 – Not started"> 0 – Not started</label>
+          <label><input type="radio" name="q_dash" value="1 – Basic"> 1 – Basic</label>
+          <label><input type="radio" name="q_dash" value="2 – Advanced"> 2 – Advanced</label>
+        </div>
+      </div>
+
+      <div class="assess-result" id="overviewResult">
+        <h4 id="resultTitle">Your maturity level</h4>
+        <div class="score-bar-wrap"><div class="score-bar" id="scoreBar" style="width:0%"></div></div>
+        <p class="score-label" id="scoreLabel"></p>
+        <p id="resultText"></p>
+      </div>
+
+      <hr class="assess-divider" />
+
+      <!-- Part 2: Module deep-dive -->
+      <h3>Part 2: Module deep-dive</h3>
+      <p class="sub">Select a module and rate how confidently your organisation delivers in each area.</p>
+
+      <div class="assess-module-head">
+        <label for="modSelect">Select a module to assess:</label>
+        <select class="mod-pick" id="modSelect" onchange="showModule(this.value)">
+          <option value="">Choose a module...</option>
+          <option value="recruiting">Recruiting with AI</option>
+          <option value="onboarding">Onboarding</option>
+          <option value="payroll">Payroll Automation</option>
+          <option value="learning">Continuous Learning</option>
+          <option value="analytics">People Data and Analytics</option>
+          <option value="joule">Generative AI in HR</option>
+        </select>
+      </div>
+
+      <!-- Recruiting -->
+      <div class="module-qs" id="mod-recruiting">
+        <p class="module-title">Recruiting with AI: 5 questions</p>
+        <div class="assess-q"><label class="ql">Do you use AI-powered sourcing tools?</label><div class="radio-row"><label><input type="radio" name="rec1" value="No"> No</label><label><input type="radio" name="rec1" value="Pilot"> Pilot</label><label><input type="radio" name="rec1" value="At scale"> At scale</label></div></div>
+        <div class="assess-q"><label class="ql">Is resume screening automated with ML?</label><div class="radio-row"><label><input type="radio" name="rec2" value="Manual"> Manual</label><label><input type="radio" name="rec2" value="Partially"> Partially</label><label><input type="radio" name="rec2" value="Fully"> Fully</label></div></div>
+        <div class="assess-q"><label class="ql">Are interview schedules optimised automatically?</label><div class="radio-row"><label><input type="radio" name="rec3" value="No"> No</label><label><input type="radio" name="rec3" value="Limited"> Limited</label><label><input type="radio" name="rec3" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Is candidate experience sentiment analysed?</label><div class="radio-row"><label><input type="radio" name="rec4" value="No"> No</label><label><input type="radio" name="rec4" value="Ad-hoc"> Ad-hoc</label><label><input type="radio" name="rec4" value="Continuous"> Continuous</label></div></div>
+        <div class="assess-q"><label class="ql">Are diversity gaps predicted and addressed?</label><div class="radio-row"><label><input type="radio" name="rec5" value="Never"> Never</label><label><input type="radio" name="rec5" value="Occasionally"> Occasionally</label><label><input type="radio" name="rec5" value="Proactively"> Proactively</label></div></div>
+      </div>
+
+      <!-- Onboarding -->
+      <div class="module-qs" id="mod-onboarding">
+        <p class="module-title">Onboarding: 5 questions</p>
+        <div class="assess-q"><label class="ql">Is the onboarding journey personalised per role?</label><div class="radio-row"><label><input type="radio" name="ob1" value="No"> No</label><label><input type="radio" name="ob1" value="Partially"> Partially</label><label><input type="radio" name="ob1" value="Fully"> Fully</label></div></div>
+        <div class="assess-q"><label class="ql">Are tasks and documents sent automatically?</label><div class="radio-row"><label><input type="radio" name="ob2" value="Manual"> Manual</label><label><input type="radio" name="ob2" value="Semi-automated"> Semi-automated</label><label><input type="radio" name="ob2" value="Automated"> Automated</label></div></div>
+        <div class="assess-q"><label class="ql">Does your system track new hire progress in real time?</label><div class="radio-row"><label><input type="radio" name="ob3" value="No"> No</label><label><input type="radio" name="ob3" value="Limited"> Limited</label><label><input type="radio" name="ob3" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Is there an AI assistant available for new hire questions?</label><div class="radio-row"><label><input type="radio" name="ob4" value="No"> No</label><label><input type="radio" name="ob4" value="Planned"> Planned</label><label><input type="radio" name="ob4" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Is time-to-productivity measured and reported?</label><div class="radio-row"><label><input type="radio" name="ob5" value="Never"> Never</label><label><input type="radio" name="ob5" value="Occasionally"> Occasionally</label><label><input type="radio" name="ob5" value="Always"> Always</label></div></div>
+      </div>
+
+      <!-- Payroll -->
+      <div class="module-qs" id="mod-payroll">
+        <p class="module-title">Payroll Automation: 5 questions</p>
+        <div class="assess-q"><label class="ql">How much of your payroll process is automated?</label><div class="radio-row"><label><input type="radio" name="pay1" value="Manual"> Mostly manual</label><label><input type="radio" name="pay1" value="Partial"> Partially automated</label><label><input type="radio" name="pay1" value="Full"> Fully automated</label></div></div>
+        <div class="assess-q"><label class="ql">Are payroll errors detected automatically before processing?</label><div class="radio-row"><label><input type="radio" name="pay2" value="No"> No</label><label><input type="radio" name="pay2" value="Some"> Some checks</label><label><input type="radio" name="pay2" value="Yes"> Yes, fully</label></div></div>
+        <div class="assess-q"><label class="ql">Is payroll integrated with HR and time data in real time?</label><div class="radio-row"><label><input type="radio" name="pay3" value="No"> No</label><label><input type="radio" name="pay3" value="Partial"> Partially</label><label><input type="radio" name="pay3" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Can employees access payslips and queries via self-service?</label><div class="radio-row"><label><input type="radio" name="pay4" value="No"> No</label><label><input type="radio" name="pay4" value="Limited"> Limited</label><label><input type="radio" name="pay4" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Is compliance checking automated across all countries?</label><div class="radio-row"><label><input type="radio" name="pay5" value="No"> No</label><label><input type="radio" name="pay5" value="Some"> Some regions</label><label><input type="radio" name="pay5" value="Yes"> All regions</label></div></div>
+      </div>
+
+      <!-- Learning -->
+      <div class="module-qs" id="mod-learning">
+        <p class="module-title">Continuous Learning: 5 questions</p>
+        <div class="assess-q"><label class="ql">Are learning recommendations personalised by AI?</label><div class="radio-row"><label><input type="radio" name="lrn1" value="No"> No</label><label><input type="radio" name="lrn1" value="Partial"> Partially</label><label><input type="radio" name="lrn1" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Are skills gaps automatically identified and surfaced?</label><div class="radio-row"><label><input type="radio" name="lrn2" value="No"> No</label><label><input type="radio" name="lrn2" value="Ad-hoc"> Ad-hoc</label><label><input type="radio" name="lrn2" value="Continuous"> Continuously</label></div></div>
+        <div class="assess-q"><label class="ql">Is learning content available in the flow of work?</label><div class="radio-row"><label><input type="radio" name="lrn3" value="No"> No</label><label><input type="radio" name="lrn3" value="Limited"> Limited</label><label><input type="radio" name="lrn3" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Is learning completion linked to performance goals?</label><div class="radio-row"><label><input type="radio" name="lrn4" value="No"> No</label><label><input type="radio" name="lrn4" value="Partially"> Partially</label><label><input type="radio" name="lrn4" value="Yes"> Fully</label></div></div>
+        <div class="assess-q"><label class="ql">Do managers receive proactive alerts on team skill gaps?</label><div class="radio-row"><label><input type="radio" name="lrn5" value="Never"> Never</label><label><input type="radio" name="lrn5" value="Sometimes"> Sometimes</label><label><input type="radio" name="lrn5" value="Always"> Always</label></div></div>
+      </div>
+
+      <!-- Analytics -->
+      <div class="module-qs" id="mod-analytics">
+        <p class="module-title">People Data and Analytics: 5 questions</p>
+        <div class="assess-q"><label class="ql">Do you have a single source of truth for people data?</label><div class="radio-row"><label><input type="radio" name="an1" value="No"> No</label><label><input type="radio" name="an1" value="Partial"> Partially</label><label><input type="radio" name="an1" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Are attrition risks predicted proactively?</label><div class="radio-row"><label><input type="radio" name="an2" value="No"> No</label><label><input type="radio" name="an2" value="Manual"> Manual analysis</label><label><input type="radio" name="an2" value="Automated"> AI-automated</label></div></div>
+        <div class="assess-q"><label class="ql">Can HR leaders access live dashboards on demand?</label><div class="radio-row"><label><input type="radio" name="an3" value="No"> No</label><label><input type="radio" name="an3" value="Limited"> Limited</label><label><input type="radio" name="an3" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Is workforce demand modelled for future planning?</label><div class="radio-row"><label><input type="radio" name="an4" value="No"> No</label><label><input type="radio" name="an4" value="Basic"> Basic</label><label><input type="radio" name="an4" value="Advanced"> Advanced</label></div></div>
+        <div class="assess-q"><label class="ql">Is people data used to drive business decisions beyond HR?</label><div class="radio-row"><label><input type="radio" name="an5" value="Rarely"> Rarely</label><label><input type="radio" name="an5" value="Sometimes"> Sometimes</label><label><input type="radio" name="an5" value="Regularly"> Regularly</label></div></div>
+      </div>
+
+      <!-- Joule -->
+      <div class="module-qs" id="mod-joule">
+        <p class="module-title">Generative AI in HR: 5 questions</p>
+        <div class="assess-q"><label class="ql">Do employees use a conversational AI assistant for HR queries?</label><div class="radio-row"><label><input type="radio" name="jo1" value="No"> No</label><label><input type="radio" name="jo1" value="Piloting"> Piloting</label><label><input type="radio" name="jo1" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Is generative AI used to draft HR content (job descriptions, comms)?</label><div class="radio-row"><label><input type="radio" name="jo2" value="No"> No</label><label><input type="radio" name="jo2" value="Ad-hoc"> Ad-hoc</label><label><input type="radio" name="jo2" value="Embedded"> Embedded</label></div></div>
+        <div class="assess-q"><label class="ql">Can employees get policy answers without contacting HR?</label><div class="radio-row"><label><input type="radio" name="jo3" value="No"> No</label><label><input type="radio" name="jo3" value="Limited"> Limited</label><label><input type="radio" name="jo3" value="Yes"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Is AI used to summarise performance or feedback data?</label><div class="radio-row"><label><input type="radio" name="jo4" value="No"> No</label><label><input type="radio" name="jo4" value="Some"> Some use cases</label><label><input type="radio" name="jo4" value="Broad"> Broadly</label></div></div>
+        <div class="assess-q"><label class="ql">Is there a roadmap to expand AI use cases in HR?</label><div class="radio-row"><label><input type="radio" name="jo5" value="No"> No roadmap</label><label><input type="radio" name="jo5" value="Draft"> In draft</label><label><input type="radio" name="jo5" value="Active"> Active roadmap</label></div></div>
+      </div>
+
+      <!-- Contact -->
+      <hr class="assess-divider" />
+      <div class="assess-q">
+        <label class="ql">Your name</label>
+        <input type="text" id="aName" placeholder="Jane Smith" style="width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;color:var(--ink);outline:none;transition:border-color .18s;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--line)'">
+      </div>
+      <div class="assess-q">
+        <label class="ql">Your company</label>
+        <input type="text" id="aCompany" placeholder="Acme Corp" style="width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;color:var(--ink);outline:none;transition:border-color .18s;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--line)'">
+      </div>
+
+      <div class="assess-actions">
+        <button class="btn-assess" onclick="calcScore()">Show my results</button>
+        <button class="btn-assess secondary" onclick="sendResults()">Send results to SAP</button>
+      </div>
+
+      <div class="assess-result" id="overviewResult">
+        <h4 id="resultTitle">Your HR digital maturity score</h4>
+        <div class="score-bar-wrap"><div class="score-bar" id="scoreBar" style="width:0%"></div></div>
+        <p class="score-label" id="scoreLabel"></p>
+        <p id="resultText"></p>
+      </div>
+
+      <div class="assess-sent" id="sentMsg">
+        Your results have been prepared. Your email client will open with a pre-filled message to the SAP team.
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta" id="cta">
   <div class="wrap">
@@ -531,49 +766,106 @@
 </footer>
 
 <script>
+  /* ---- reveal + count-up (existing) ---- */
   (function(){
     var reduce = !window.matchMedia || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var hasIO = "IntersectionObserver" in window;
-
-    /* Reveal on scroll */
     var items = document.querySelectorAll(".reveal");
-    if(reduce || !hasIO){
-      items.forEach(function(el){el.classList.add("in");});
-    } else {
+    if(reduce || !hasIO){ items.forEach(function(el){el.classList.add("in");}); }
+    else {
       var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
-        });
+        entries.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);} });
       },{threshold:.14});
       items.forEach(function(el){io.observe(el);});
     }
-
-    /* Count-up numbers */
     var counters = document.querySelectorAll(".count");
     function animate(el){
-      var target = parseInt(el.getAttribute("data-count"),10) || 0;
-      var dur = 1300, start = null;
+      var target=parseInt(el.getAttribute("data-count"),10)||0,dur=1300,start=null;
       function step(ts){
-        if(!start) start = ts;
-        var p = Math.min((ts - start) / dur, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(eased * target);
-        if(p < 1){ requestAnimationFrame(step); } else { el.textContent = target; }
+        if(!start)start=ts;
+        var p=Math.min((ts-start)/dur,1),eased=1-Math.pow(1-p,3);
+        el.textContent=Math.round(eased*target);
+        if(p<1){requestAnimationFrame(step);}else{el.textContent=target;}
       }
       requestAnimationFrame(step);
     }
-    if(reduce || !hasIO){
-      counters.forEach(function(el){ el.textContent = el.getAttribute("data-count"); });
-    } else {
-      var cio = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting){ animate(e.target); cio.unobserve(e.target); }
-        });
+    if(reduce||!hasIO){ counters.forEach(function(el){el.textContent=el.getAttribute("data-count");}); }
+    else {
+      var cio=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){if(e.isIntersecting){animate(e.target);cio.unobserve(e.target);}});
       },{threshold:.6});
-      counters.forEach(function(el){ cio.observe(el); });
+      counters.forEach(function(el){cio.observe(el);});
     }
   })();
-</script>
 
+  /* ---- module switcher ---- */
+  function showModule(val){
+    document.querySelectorAll(".module-qs").forEach(function(d){d.classList.remove("active");});
+    if(val){ var el=document.getElementById("mod-"+val); if(el) el.classList.add("active"); }
+  }
+
+  /* ---- score labels ---- */
+  var overviewFields = ["q_recruit","q_onboard","q_learning","q_feedback","q_analytics","q_dash"];
+  function getVal(name){
+    var el=document.querySelector("input[name='"+name+"']:checked");
+    if(!el) return 0;
+    return parseInt(el.value.charAt(0)) || 0;
+  }
+  function calcScore(){
+    var total=0, max=overviewFields.length*2;
+    overviewFields.forEach(function(f){ total+=getVal(f); });
+    var pct=Math.round((total/max)*100);
+    var level = pct<=33 ? "Early stage" : pct<=66 ? "Developing" : "Advanced";
+    var desc = pct<=33
+      ? "Your organisation is at the start of its HR digital journey. SAP SuccessFactors can help you build the foundation with modern, integrated HR and payroll."
+      : pct<=66
+      ? "You have solid foundations in place. AI-enabled features in SAP SuccessFactors can help you accelerate across recruitment, payroll, and workforce planning."
+      : "You are operating at an advanced level. Agentic AI and Joule can help you unlock the next wave of efficiency and employee experience improvements.";
+    document.getElementById("resultTitle").textContent = level+" ("+pct+"%)";
+    document.getElementById("scoreBar").style.width = pct+"%";
+    document.getElementById("scoreLabel").textContent = total+" out of "+max+" points";
+    document.getElementById("resultText").textContent = desc;
+    var r=document.getElementById("overviewResult");
+    r.classList.add("show");
+    r.scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+
+  /* ---- collect all answers ---- */
+  function collectAll(){
+    var lines=[];
+    var name=document.getElementById("aName").value||"(not provided)";
+    var company=document.getElementById("aCompany").value||"(not provided)";
+    lines.push("NAME: "+name);
+    lines.push("COMPANY: "+company);
+    lines.push("");
+    lines.push("--- PART 1: OVERVIEW ---");
+    var labels={"q_recruit":"Digital recruitment","q_onboard":"Personalised onboarding","q_learning":"Continuous learning","q_feedback":"Always-on feedback","q_analytics":"People Analytics","q_dash":"Live dashboards"};
+    overviewFields.forEach(function(f){
+      var el=document.querySelector("input[name='"+f+"']:checked");
+      lines.push((labels[f]||f)+": "+(el?el.value:"No answer"));
+    });
+    lines.push("");
+    var mod=document.getElementById("modSelect").value;
+    if(mod){
+      lines.push("--- PART 2: MODULE: "+document.getElementById("modSelect").options[document.getElementById("modSelect").selectedIndex].text+" ---");
+      document.querySelectorAll("#mod-"+mod+" input[type=radio]:checked").forEach(function(inp){
+        var qLabel=inp.closest(".assess-q").querySelector(".ql").textContent;
+        lines.push(qLabel+": "+inp.value);
+      });
+    }
+    return lines.join("\n");
+  }
+
+  /* ---- send via mailto ---- */
+  function sendResults(){
+    var body=collectAll();
+    var name=document.getElementById("aName").value||"HR Leader";
+    var company=document.getElementById("aCompany").value||"";
+    var subject="HR Digital Maturity Assessment"+(company?" – "+company:"")+" (from SAP SuccessFactors microsite)";
+    var mailto="mailto:marc.delicado@sap.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+    window.location.href=mailto;
+    document.getElementById("sentMsg").classList.add("show");
+  }
+</script>
 </body>
 </html>

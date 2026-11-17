@@ -131,14 +131,14 @@
   @media(max-width:860px){.types{grid-template-columns:1fr;}}
   .type{
     background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px;
-    transition:border-color .2s,box-shadow .25s,transform .25s;position:relative;
+    transition:border-color .2s,box-shadow .25s,transform .25s;position:relative;overflow:hidden;
   }
   .type:hover{border-color:#c9d6ea;box-shadow:0 14px 34px rgba(5,16,58,.09);transform:translateY(-3px);}
   .type .ic{width:52px;height:52px;border-radius:12px;background:#eaf3ff;display:flex;align-items:center;justify-content:center;margin-bottom:22px;}
   .type .ic svg{width:26px;height:26px;stroke:var(--blue);fill:none;stroke-width:1.6;}
   .type .no{
-    position:absolute;top:-18px;right:16px;
-    font-size:108px;font-weight:800;color:#e8ecf2;line-height:1;
+    position:absolute;top:-8px;right:14px;
+    font-size:88px;font-weight:800;color:#e8ecf2;line-height:1;
     letter-spacing:-.04em;pointer-events:none;user-select:none;z-index:0;
   }
   .type .ic,.type .tag,.type h3,.type p,.type .ex{position:relative;z-index:1;}
@@ -574,60 +574,60 @@
     <div class="assess-form reveal">
 
       <!-- Part 1: Quick overview -->
-      <h3>Part 1: Quick overview</h3>
-      <p class="sub">Rate each area: 0 = Not started, 1 = Basic, 2 = Advanced</p>
+      <h3>Part 1: Where does your company stand today?</h3>
+      <p class="sub">Answer honestly. 0 = Not in place, 1 = Partially in place, 2 = Fully in place</p>
 
       <div class="assess-q">
-        <label class="ql">Digital recruitment</label>
+        <label class="ql">Does your company use digital tools to attract and screen candidates?</label>
         <div class="radio-row">
-          <label><input type="radio" name="q_recruit" value="0 – Not started"> 0 – Not started</label>
-          <label><input type="radio" name="q_recruit" value="1 – Basic"> 1 – Basic</label>
-          <label><input type="radio" name="q_recruit" value="2 – Advanced"> 2 – Advanced</label>
+          <label><input type="radio" name="q_recruit" value="0 - Not in place"> 0 - Not in place</label>
+          <label><input type="radio" name="q_recruit" value="1 - Partially"> 1 - Partially</label>
+          <label><input type="radio" name="q_recruit" value="2 - Fully"> 2 - Fully</label>
         </div>
       </div>
       <div class="assess-q">
-        <label class="ql">Personalised onboarding</label>
+        <label class="ql">Does your onboarding process guide new hires automatically from day one?</label>
         <div class="radio-row">
-          <label><input type="radio" name="q_onboard" value="0 – Not started"> 0 – Not started</label>
-          <label><input type="radio" name="q_onboard" value="1 – Basic"> 1 – Basic</label>
-          <label><input type="radio" name="q_onboard" value="2 – Advanced"> 2 – Advanced</label>
+          <label><input type="radio" name="q_onboard" value="0 - Not in place"> 0 - Not in place</label>
+          <label><input type="radio" name="q_onboard" value="1 - Partially"> 1 - Partially</label>
+          <label><input type="radio" name="q_onboard" value="2 - Fully"> 2 - Fully</label>
         </div>
       </div>
       <div class="assess-q">
-        <label class="ql">Continuous learning culture</label>
+        <label class="ql">Does your organisation actively support employee learning and skills development?</label>
         <div class="radio-row">
-          <label><input type="radio" name="q_learning" value="0 – Not started"> 0 – Not started</label>
-          <label><input type="radio" name="q_learning" value="1 – Basic"> 1 – Basic</label>
-          <label><input type="radio" name="q_learning" value="2 – Advanced"> 2 – Advanced</label>
+          <label><input type="radio" name="q_learning" value="0 - Not in place"> 0 - Not in place</label>
+          <label><input type="radio" name="q_learning" value="1 - Partially"> 1 - Partially</label>
+          <label><input type="radio" name="q_learning" value="2 - Fully"> 2 - Fully</label>
         </div>
       </div>
       <div class="assess-q">
-        <label class="ql">Always-on feedback</label>
+        <label class="ql">Does your company have a structured way to collect and act on employee feedback?</label>
         <div class="radio-row">
-          <label><input type="radio" name="q_feedback" value="0 – Not started"> 0 – Not started</label>
-          <label><input type="radio" name="q_feedback" value="1 – Basic"> 1 – Basic</label>
-          <label><input type="radio" name="q_feedback" value="2 – Advanced"> 2 – Advanced</label>
+          <label><input type="radio" name="q_feedback" value="0 - Not in place"> 0 - Not in place</label>
+          <label><input type="radio" name="q_feedback" value="1 - Partially"> 1 - Partially</label>
+          <label><input type="radio" name="q_feedback" value="2 - Fully"> 2 - Fully</label>
         </div>
       </div>
       <div class="assess-q">
-        <label class="ql">Proactive People Analytics</label>
+        <label class="ql">Does your HR team use data to anticipate workforce challenges before they happen?</label>
         <div class="radio-row">
-          <label><input type="radio" name="q_analytics" value="0 – Not started"> 0 – Not started</label>
-          <label><input type="radio" name="q_analytics" value="1 – Basic"> 1 – Basic</label>
-          <label><input type="radio" name="q_analytics" value="2 – Advanced"> 2 – Advanced</label>
+          <label><input type="radio" name="q_analytics" value="0 - Not in place"> 0 - Not in place</label>
+          <label><input type="radio" name="q_analytics" value="1 - Partially"> 1 - Partially</label>
+          <label><input type="radio" name="q_analytics" value="2 - Fully"> 2 - Fully</label>
         </div>
       </div>
       <div class="assess-q">
-        <label class="ql">Live dashboards</label>
+        <label class="ql">Do your HR leaders have access to real-time dashboards to track key people metrics?</label>
         <div class="radio-row">
-          <label><input type="radio" name="q_dash" value="0 – Not started"> 0 – Not started</label>
-          <label><input type="radio" name="q_dash" value="1 – Basic"> 1 – Basic</label>
-          <label><input type="radio" name="q_dash" value="2 – Advanced"> 2 – Advanced</label>
+          <label><input type="radio" name="q_dash" value="0 - Not in place"> 0 - Not in place</label>
+          <label><input type="radio" name="q_dash" value="1 - Partially"> 1 - Partially</label>
+          <label><input type="radio" name="q_dash" value="2 - Fully"> 2 - Fully</label>
         </div>
       </div>
 
       <div class="assess-result" id="overviewResult">
-        <h4 id="resultTitle">Your maturity level</h4>
+        <h4 id="resultTitle">Your HR digital maturity score</h4>
         <div class="score-bar-wrap"><div class="score-bar" id="scoreBar" style="width:0%"></div></div>
         <p class="score-label" id="scoreLabel"></p>
         <p id="resultText"></p>
@@ -636,80 +636,80 @@
       <hr class="assess-divider" />
 
       <!-- Part 2: Module deep-dive -->
-      <h3>Part 2: Module deep-dive</h3>
-      <p class="sub">Select a module and rate how confidently your organisation delivers in each area.</p>
+      <h3>Part 2: Tell us more about a specific area</h3>
+      <p class="sub">Select the area most relevant to your current HR priorities and answer 5 short questions.</p>
 
       <div class="assess-module-head">
-        <label for="modSelect">Select a module to assess:</label>
+        <label for="modSelect">Select an area:</label>
         <select class="mod-pick" id="modSelect" onchange="showModule(this.value)">
-          <option value="">Choose a module...</option>
-          <option value="recruiting">Recruiting with AI</option>
-          <option value="onboarding">Onboarding</option>
-          <option value="payroll">Payroll Automation</option>
-          <option value="learning">Continuous Learning</option>
-          <option value="analytics">People Data and Analytics</option>
-          <option value="joule">Generative AI in HR</option>
+          <option value="">Choose an area...</option>
+          <option value="recruiting">Recruitment and hiring</option>
+          <option value="onboarding">Employee onboarding</option>
+          <option value="payroll">Payroll and compliance</option>
+          <option value="learning">Learning and development</option>
+          <option value="analytics">People data and analytics</option>
+          <option value="joule">AI and automation in HR</option>
         </select>
       </div>
 
       <!-- Recruiting -->
       <div class="module-qs" id="mod-recruiting">
-        <p class="module-title">Recruiting with AI: 5 questions</p>
-        <div class="assess-q"><label class="ql">Do you use AI-powered sourcing tools?</label><div class="radio-row"><label><input type="radio" name="rec1" value="No"> No</label><label><input type="radio" name="rec1" value="Pilot"> Pilot</label><label><input type="radio" name="rec1" value="At scale"> At scale</label></div></div>
-        <div class="assess-q"><label class="ql">Is resume screening automated with ML?</label><div class="radio-row"><label><input type="radio" name="rec2" value="Manual"> Manual</label><label><input type="radio" name="rec2" value="Partially"> Partially</label><label><input type="radio" name="rec2" value="Fully"> Fully</label></div></div>
-        <div class="assess-q"><label class="ql">Are interview schedules optimised automatically?</label><div class="radio-row"><label><input type="radio" name="rec3" value="No"> No</label><label><input type="radio" name="rec3" value="Limited"> Limited</label><label><input type="radio" name="rec3" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Is candidate experience sentiment analysed?</label><div class="radio-row"><label><input type="radio" name="rec4" value="No"> No</label><label><input type="radio" name="rec4" value="Ad-hoc"> Ad-hoc</label><label><input type="radio" name="rec4" value="Continuous"> Continuous</label></div></div>
-        <div class="assess-q"><label class="ql">Are diversity gaps predicted and addressed?</label><div class="radio-row"><label><input type="radio" name="rec5" value="Never"> Never</label><label><input type="radio" name="rec5" value="Occasionally"> Occasionally</label><label><input type="radio" name="rec5" value="Proactively"> Proactively</label></div></div>
+        <p class="module-title">Recruitment and hiring</p>
+        <div class="assess-q"><label class="ql">Does your company currently use any AI-powered tools to source or shortlist candidates?</label><div class="radio-row"><label><input type="radio" name="rec1" value="No, we do it manually"> No, manually</label><label><input type="radio" name="rec1" value="We are piloting"> Piloting</label><label><input type="radio" name="rec1" value="Yes, fully in use"> Yes, fully</label></div></div>
+        <div class="assess-q"><label class="ql">How does your team currently screen CVs and applications?</label><div class="radio-row"><label><input type="radio" name="rec2" value="Manually by HR"> Manually</label><label><input type="radio" name="rec2" value="Partly automated"> Partly automated</label><label><input type="radio" name="rec2" value="Mostly automated"> Mostly automated</label></div></div>
+        <div class="assess-q"><label class="ql">Does your company track and measure the candidate experience?</label><div class="radio-row"><label><input type="radio" name="rec3" value="No"> No</label><label><input type="radio" name="rec3" value="Ad-hoc surveys"> Ad-hoc</label><label><input type="radio" name="rec3" value="Systematically"> Yes, systematically</label></div></div>
+        <div class="assess-q"><label class="ql">Do recruiters have real-time visibility of pipeline status and time-to-hire?</label><div class="radio-row"><label><input type="radio" name="rec4" value="No"> No</label><label><input type="radio" name="rec4" value="Limited reports"> Limited</label><label><input type="radio" name="rec4" value="Yes, live dashboards"> Yes, live</label></div></div>
+        <div class="assess-q"><label class="ql">Is your hiring process consistent and standardised across all departments and locations?</label><div class="radio-row"><label><input type="radio" name="rec5" value="No, varies a lot"> No</label><label><input type="radio" name="rec5" value="Partially"> Partially</label><label><input type="radio" name="rec5" value="Yes, fully standardised"> Yes</label></div></div>
       </div>
 
       <!-- Onboarding -->
       <div class="module-qs" id="mod-onboarding">
-        <p class="module-title">Onboarding: 5 questions</p>
-        <div class="assess-q"><label class="ql">Is the onboarding journey personalised per role?</label><div class="radio-row"><label><input type="radio" name="ob1" value="No"> No</label><label><input type="radio" name="ob1" value="Partially"> Partially</label><label><input type="radio" name="ob1" value="Fully"> Fully</label></div></div>
-        <div class="assess-q"><label class="ql">Are tasks and documents sent automatically?</label><div class="radio-row"><label><input type="radio" name="ob2" value="Manual"> Manual</label><label><input type="radio" name="ob2" value="Semi-automated"> Semi-automated</label><label><input type="radio" name="ob2" value="Automated"> Automated</label></div></div>
-        <div class="assess-q"><label class="ql">Does your system track new hire progress in real time?</label><div class="radio-row"><label><input type="radio" name="ob3" value="No"> No</label><label><input type="radio" name="ob3" value="Limited"> Limited</label><label><input type="radio" name="ob3" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Is there an AI assistant available for new hire questions?</label><div class="radio-row"><label><input type="radio" name="ob4" value="No"> No</label><label><input type="radio" name="ob4" value="Planned"> Planned</label><label><input type="radio" name="ob4" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Is time-to-productivity measured and reported?</label><div class="radio-row"><label><input type="radio" name="ob5" value="Never"> Never</label><label><input type="radio" name="ob5" value="Occasionally"> Occasionally</label><label><input type="radio" name="ob5" value="Always"> Always</label></div></div>
+        <p class="module-title">Employee onboarding</p>
+        <div class="assess-q"><label class="ql">Does your company have a structured onboarding programme for new hires?</label><div class="radio-row"><label><input type="radio" name="ob1" value="No formal process"> No</label><label><input type="radio" name="ob1" value="Some structure"> Partially</label><label><input type="radio" name="ob1" value="Yes, fully structured"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Are welcome documents, tasks, and introductions sent to new hires automatically?</label><div class="radio-row"><label><input type="radio" name="ob2" value="No, done manually"> No</label><label><input type="radio" name="ob2" value="Some automation"> Partially</label><label><input type="radio" name="ob2" value="Yes, automated"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Can managers see in real time how their new hire is progressing through onboarding?</label><div class="radio-row"><label><input type="radio" name="ob3" value="No visibility"> No</label><label><input type="radio" name="ob3" value="Basic check-ins"> Partially</label><label><input type="radio" name="ob3" value="Yes, real-time"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Do new employees have a digital channel to ask HR questions during their first weeks?</label><div class="radio-row"><label><input type="radio" name="ob4" value="No, email or phone only"> No</label><label><input type="radio" name="ob4" value="A portal or FAQ"> Basic portal</label><label><input type="radio" name="ob4" value="AI assistant available"> AI assistant</label></div></div>
+        <div class="assess-q"><label class="ql">Does your company measure how quickly new hires reach full productivity?</label><div class="radio-row"><label><input type="radio" name="ob5" value="No, we do not measure this"> No</label><label><input type="radio" name="ob5" value="Informally"> Informally</label><label><input type="radio" name="ob5" value="Yes, tracked formally"> Yes</label></div></div>
       </div>
 
       <!-- Payroll -->
       <div class="module-qs" id="mod-payroll">
-        <p class="module-title">Payroll Automation: 5 questions</p>
-        <div class="assess-q"><label class="ql">How much of your payroll process is automated?</label><div class="radio-row"><label><input type="radio" name="pay1" value="Manual"> Mostly manual</label><label><input type="radio" name="pay1" value="Partial"> Partially automated</label><label><input type="radio" name="pay1" value="Full"> Fully automated</label></div></div>
-        <div class="assess-q"><label class="ql">Are payroll errors detected automatically before processing?</label><div class="radio-row"><label><input type="radio" name="pay2" value="No"> No</label><label><input type="radio" name="pay2" value="Some"> Some checks</label><label><input type="radio" name="pay2" value="Yes"> Yes, fully</label></div></div>
-        <div class="assess-q"><label class="ql">Is payroll integrated with HR and time data in real time?</label><div class="radio-row"><label><input type="radio" name="pay3" value="No"> No</label><label><input type="radio" name="pay3" value="Partial"> Partially</label><label><input type="radio" name="pay3" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Can employees access payslips and queries via self-service?</label><div class="radio-row"><label><input type="radio" name="pay4" value="No"> No</label><label><input type="radio" name="pay4" value="Limited"> Limited</label><label><input type="radio" name="pay4" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Is compliance checking automated across all countries?</label><div class="radio-row"><label><input type="radio" name="pay5" value="No"> No</label><label><input type="radio" name="pay5" value="Some"> Some regions</label><label><input type="radio" name="pay5" value="Yes"> All regions</label></div></div>
+        <p class="module-title">Payroll and compliance</p>
+        <div class="assess-q"><label class="ql">How would you describe your current payroll process?</label><div class="radio-row"><label><input type="radio" name="pay1" value="Mostly manual"> Mostly manual</label><label><input type="radio" name="pay1" value="Partially automated"> Partly automated</label><label><input type="radio" name="pay1" value="Fully automated"> Fully automated</label></div></div>
+        <div class="assess-q"><label class="ql">Does your system automatically flag payroll errors or anomalies before processing?</label><div class="radio-row"><label><input type="radio" name="pay2" value="No"> No</label><label><input type="radio" name="pay2" value="Some basic checks"> Some checks</label><label><input type="radio" name="pay2" value="Yes, automated validation"> Yes, automated</label></div></div>
+        <div class="assess-q"><label class="ql">Is your payroll system connected to HR and time-tracking data in real time?</label><div class="radio-row"><label><input type="radio" name="pay3" value="No, separate systems"> No</label><label><input type="radio" name="pay3" value="Partially integrated"> Partially</label><label><input type="radio" name="pay3" value="Yes, fully integrated"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Can employees view their payslips and raise payroll queries without contacting HR?</label><div class="radio-row"><label><input type="radio" name="pay4" value="No"> No</label><label><input type="radio" name="pay4" value="Limited self-service"> Limited</label><label><input type="radio" name="pay4" value="Yes, full self-service"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Does your company operate payroll across multiple countries?</label><div class="radio-row"><label><input type="radio" name="pay5" value="No, single country"> Single country</label><label><input type="radio" name="pay5" value="2 to 5 countries"> 2 to 5 countries</label><label><input type="radio" name="pay5" value="More than 5 countries"> More than 5</label></div></div>
       </div>
 
       <!-- Learning -->
       <div class="module-qs" id="mod-learning">
-        <p class="module-title">Continuous Learning: 5 questions</p>
-        <div class="assess-q"><label class="ql">Are learning recommendations personalised by AI?</label><div class="radio-row"><label><input type="radio" name="lrn1" value="No"> No</label><label><input type="radio" name="lrn1" value="Partial"> Partially</label><label><input type="radio" name="lrn1" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Are skills gaps automatically identified and surfaced?</label><div class="radio-row"><label><input type="radio" name="lrn2" value="No"> No</label><label><input type="radio" name="lrn2" value="Ad-hoc"> Ad-hoc</label><label><input type="radio" name="lrn2" value="Continuous"> Continuously</label></div></div>
-        <div class="assess-q"><label class="ql">Is learning content available in the flow of work?</label><div class="radio-row"><label><input type="radio" name="lrn3" value="No"> No</label><label><input type="radio" name="lrn3" value="Limited"> Limited</label><label><input type="radio" name="lrn3" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Is learning completion linked to performance goals?</label><div class="radio-row"><label><input type="radio" name="lrn4" value="No"> No</label><label><input type="radio" name="lrn4" value="Partially"> Partially</label><label><input type="radio" name="lrn4" value="Yes"> Fully</label></div></div>
-        <div class="assess-q"><label class="ql">Do managers receive proactive alerts on team skill gaps?</label><div class="radio-row"><label><input type="radio" name="lrn5" value="Never"> Never</label><label><input type="radio" name="lrn5" value="Sometimes"> Sometimes</label><label><input type="radio" name="lrn5" value="Always"> Always</label></div></div>
+        <p class="module-title">Learning and development</p>
+        <div class="assess-q"><label class="ql">Does your company have a formal learning and development programme for employees?</label><div class="radio-row"><label><input type="radio" name="lrn1" value="No"> No</label><label><input type="radio" name="lrn1" value="Informal or ad-hoc"> Informal</label><label><input type="radio" name="lrn1" value="Yes, structured programme"> Yes, structured</label></div></div>
+        <div class="assess-q"><label class="ql">Are learning recommendations tailored to each employee's role and skills gaps?</label><div class="radio-row"><label><input type="radio" name="lrn2" value="No, same for everyone"> No</label><label><input type="radio" name="lrn2" value="Some personalisation"> Partially</label><label><input type="radio" name="lrn2" value="Yes, AI-personalised"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Does your organisation have a way to identify which skills are missing across teams?</label><div class="radio-row"><label><input type="radio" name="lrn3" value="No formal process"> No</label><label><input type="radio" name="lrn3" value="Manual assessments"> Manual</label><label><input type="radio" name="lrn3" value="Automated skills mapping"> Automated</label></div></div>
+        <div class="assess-q"><label class="ql">Is learning progress connected to performance reviews and career goals?</label><div class="radio-row"><label><input type="radio" name="lrn4" value="No connection"> No</label><label><input type="radio" name="lrn4" value="Partially"> Partially</label><label><input type="radio" name="lrn4" value="Yes, fully connected"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Do managers receive alerts when their team has critical skills gaps that need addressing?</label><div class="radio-row"><label><input type="radio" name="lrn5" value="No"> No</label><label><input type="radio" name="lrn5" value="Sometimes, manually flagged"> Sometimes</label><label><input type="radio" name="lrn5" value="Yes, proactively"> Yes, proactively</label></div></div>
       </div>
 
       <!-- Analytics -->
       <div class="module-qs" id="mod-analytics">
-        <p class="module-title">People Data and Analytics: 5 questions</p>
-        <div class="assess-q"><label class="ql">Do you have a single source of truth for people data?</label><div class="radio-row"><label><input type="radio" name="an1" value="No"> No</label><label><input type="radio" name="an1" value="Partial"> Partially</label><label><input type="radio" name="an1" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Are attrition risks predicted proactively?</label><div class="radio-row"><label><input type="radio" name="an2" value="No"> No</label><label><input type="radio" name="an2" value="Manual"> Manual analysis</label><label><input type="radio" name="an2" value="Automated"> AI-automated</label></div></div>
-        <div class="assess-q"><label class="ql">Can HR leaders access live dashboards on demand?</label><div class="radio-row"><label><input type="radio" name="an3" value="No"> No</label><label><input type="radio" name="an3" value="Limited"> Limited</label><label><input type="radio" name="an3" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Is workforce demand modelled for future planning?</label><div class="radio-row"><label><input type="radio" name="an4" value="No"> No</label><label><input type="radio" name="an4" value="Basic"> Basic</label><label><input type="radio" name="an4" value="Advanced"> Advanced</label></div></div>
-        <div class="assess-q"><label class="ql">Is people data used to drive business decisions beyond HR?</label><div class="radio-row"><label><input type="radio" name="an5" value="Rarely"> Rarely</label><label><input type="radio" name="an5" value="Sometimes"> Sometimes</label><label><input type="radio" name="an5" value="Regularly"> Regularly</label></div></div>
+        <p class="module-title">People data and analytics</p>
+        <div class="assess-q"><label class="ql">Does your company have one central system that holds all employee data?</label><div class="radio-row"><label><input type="radio" name="an1" value="No, data is spread across multiple systems"> No, multiple systems</label><label><input type="radio" name="an1" value="Partially centralised"> Partially</label><label><input type="radio" name="an1" value="Yes, single system of record"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Can your HR team identify which employees are at risk of leaving before they resign?</label><div class="radio-row"><label><input type="radio" name="an2" value="No"> No</label><label><input type="radio" name="an2" value="Based on gut feel"> Gut feel only</label><label><input type="radio" name="an2" value="Yes, with predictive data"> Yes, with data</label></div></div>
+        <div class="assess-q"><label class="ql">Do HR leaders have access to real-time reports without relying on IT or manual extracts?</label><div class="radio-row"><label><input type="radio" name="an3" value="No, we rely on IT"> No</label><label><input type="radio" name="an3" value="Some self-service reports"> Partially</label><label><input type="radio" name="an3" value="Yes, full self-service"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Does your company use workforce data to plan for future headcount and skills needs?</label><div class="radio-row"><label><input type="radio" name="an4" value="No formal planning"> No</label><label><input type="radio" name="an4" value="Basic headcount planning"> Basic</label><label><input type="radio" name="an4" value="Advanced workforce modelling"> Advanced</label></div></div>
+        <div class="assess-q"><label class="ql">Is HR data shared with business leaders to support broader strategic decisions?</label><div class="radio-row"><label><input type="radio" name="an5" value="Rarely or never"> Rarely</label><label><input type="radio" name="an5" value="For some decisions"> Sometimes</label><label><input type="radio" name="an5" value="Yes, regularly"> Yes, regularly</label></div></div>
       </div>
 
       <!-- Joule -->
       <div class="module-qs" id="mod-joule">
-        <p class="module-title">Generative AI in HR: 5 questions</p>
-        <div class="assess-q"><label class="ql">Do employees use a conversational AI assistant for HR queries?</label><div class="radio-row"><label><input type="radio" name="jo1" value="No"> No</label><label><input type="radio" name="jo1" value="Piloting"> Piloting</label><label><input type="radio" name="jo1" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Is generative AI used to draft HR content (job descriptions, comms)?</label><div class="radio-row"><label><input type="radio" name="jo2" value="No"> No</label><label><input type="radio" name="jo2" value="Ad-hoc"> Ad-hoc</label><label><input type="radio" name="jo2" value="Embedded"> Embedded</label></div></div>
-        <div class="assess-q"><label class="ql">Can employees get policy answers without contacting HR?</label><div class="radio-row"><label><input type="radio" name="jo3" value="No"> No</label><label><input type="radio" name="jo3" value="Limited"> Limited</label><label><input type="radio" name="jo3" value="Yes"> Yes</label></div></div>
-        <div class="assess-q"><label class="ql">Is AI used to summarise performance or feedback data?</label><div class="radio-row"><label><input type="radio" name="jo4" value="No"> No</label><label><input type="radio" name="jo4" value="Some"> Some use cases</label><label><input type="radio" name="jo4" value="Broad"> Broadly</label></div></div>
-        <div class="assess-q"><label class="ql">Is there a roadmap to expand AI use cases in HR?</label><div class="radio-row"><label><input type="radio" name="jo5" value="No"> No roadmap</label><label><input type="radio" name="jo5" value="Draft"> In draft</label><label><input type="radio" name="jo5" value="Active"> Active roadmap</label></div></div>
+        <p class="module-title">AI and automation in HR</p>
+        <div class="assess-q"><label class="ql">Do your employees currently use any AI tool to get answers to HR questions?</label><div class="radio-row"><label><input type="radio" name="jo1" value="No"> No</label><label><input type="radio" name="jo1" value="We are evaluating options"> Evaluating</label><label><input type="radio" name="jo1" value="Yes, in use"> Yes</label></div></div>
+        <div class="assess-q"><label class="ql">Does your HR team use AI to help write content such as job descriptions or policies?</label><div class="radio-row"><label><input type="radio" name="jo2" value="No"> No</label><label><input type="radio" name="jo2" value="Occasionally and informally"> Occasionally</label><label><input type="radio" name="jo2" value="Yes, as part of our workflow"> Yes, regularly</label></div></div>
+        <div class="assess-q"><label class="ql">Can your employees get answers to HR policy questions without contacting the HR team directly?</label><div class="radio-row"><label><input type="radio" name="jo3" value="No, they contact HR directly"> No</label><label><input type="radio" name="jo3" value="Via a basic FAQ or intranet"> Basic FAQ</label><label><input type="radio" name="jo3" value="Yes, via an AI assistant"> AI assistant</label></div></div>
+        <div class="assess-q"><label class="ql">How much of your HR administration (approvals, requests, updates) still requires manual steps?</label><div class="radio-row"><label><input type="radio" name="jo4" value="Most of it is manual"> Most is manual</label><label><input type="radio" name="jo4" value="Some tasks are automated"> Some automated</label><label><input type="radio" name="jo4" value="Most is automated end to end"> Mostly automated</label></div></div>
+        <div class="assess-q"><label class="ql">Does your organisation have a clear plan for how AI will be used in HR over the next two years?</label><div class="radio-row"><label><input type="radio" name="jo5" value="No plan yet"> No plan</label><label><input type="radio" name="jo5" value="Some ideas but nothing formal"> Informal ideas</label><label><input type="radio" name="jo5" value="Yes, a defined roadmap"> Defined roadmap</label></div></div>
       </div>
 
       <!-- Contact -->

@@ -363,6 +363,10 @@
   .wiz-nav{display:flex;align-items:center;justify-content:space-between;}
   .wiz-back{background:none;border:none;font-family:inherit;font-size:14.5px;font-weight:600;color:var(--blue);cursor:pointer;padding:6px 2px;}
   .wiz-back:hover{text-decoration:underline;text-underline-offset:3px;}
+  .wiz-input{display:block;width:100%;border:1.5px solid var(--line);border-radius:10px;padding:13px 16px;font-family:inherit;font-size:15px;color:var(--ink);outline:none;transition:border-color .16s;margin-bottom:12px;background:#fff;}
+  .wiz-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,112,242,.1);}
+  .wiz-input::placeholder{color:#b4bfcc;}
+  .contact-fields{margin:20px 0 4px;}
   #wizResults .score-label{font-size:13px;color:var(--muted);margin:6px 0 0;}
   #wizResults #resultText{margin:18px 0 0;color:var(--text);font-size:15px;line-height:1.55;}
   #wizResults .result-layout{grid-template-columns:1fr 240px;}
@@ -417,6 +421,27 @@
       <div class="wiz-nav">
         <button type="button" class="wiz-back" id="wizBack" onclick="wizPrev()">&larr; Back</button>
         <button type="button" class="survey-skip" onclick="closeSurvey()">Skip for now</button>
+      </div>
+    </div>
+
+    <!-- contact capture -->
+    <div id="wizContact" style="display:none;">
+      <div class="wiz-top">
+        <span class="eyebrow">HR Digital Maturity Check</span>
+        <span class="wiz-count">Almost done</span>
+      </div>
+      <div class="wiz-progress"><div class="wiz-progress-fill" style="width:100%"></div></div>
+      <h2 class="wiz-q" style="margin-bottom:8px;">Your results are ready</h2>
+      <p class="wiz-hint">Enter your details to unlock your personalised maturity score.</p>
+      <div class="contact-fields">
+        <input type="text" id="cName" placeholder="Full name *" class="wiz-input" />
+        <input type="text" id="cCompany" placeholder="Company *" class="wiz-input" />
+        <input type="email" id="cEmail" placeholder="Work email (optional)" class="wiz-input" />
+      </div>
+      <p id="contactErr" style="display:none;color:#c0392b;font-size:13px;margin:-4px 0 12px;">Please enter your name and company.</p>
+      <div class="wiz-nav" style="margin-top:8px;">
+        <button type="button" class="wiz-back" onclick="wizContactBack()">&larr; Back</button>
+        <button type="button" class="btn btn-primary" onclick="submitContact()" style="border:none;cursor:pointer;font-family:inherit;font-size:15px;padding:13px 26px;">See my results</button>
       </div>
     </div>
 
@@ -739,8 +764,32 @@
     document.body.style.overflow="";
   }
   function showResultsView(show){
-    document.getElementById("wizQuestions").style.display = show?"none":"block";
-    document.getElementById("wizResults").style.display   = show?"block":"none";
+    document.getElementById("wizQuestions").style.display = show ? "none" : "block";
+    document.getElementById("wizContact").style.display   = "none";
+    document.getElementById("wizResults").style.display   = show ? "block" : "none";
+  }
+  function showContactPanel(){
+    document.getElementById("wizQuestions").style.display = "none";
+    document.getElementById("wizContact").style.display   = "block";
+    document.getElementById("wizResults").style.display   = "none";
+  }
+  function wizContactBack(){
+    document.getElementById("wizContact").style.display   = "none";
+    document.getElementById("wizQuestions").style.display = "block";
+    document.getElementById("wizResults").style.display   = "none";
+    wizIdx = ASSESS.length - 1;
+    renderWiz();
+  }
+  function submitContact(){
+    var name    = (document.getElementById("cName").value    || "").trim();
+    var company = (document.getElementById("cCompany").value || "").trim();
+    var email   = (document.getElementById("cEmail").value   || "").trim();
+    var err = document.getElementById("contactErr");
+    if(!name || !company){ err.style.display="block"; return; }
+    err.style.display = "none";
+    var d = scoreData();
+    sendToSheets(name, company, email, d);
+    showResults();
   }
 
   function renderWiz(){
@@ -763,7 +812,7 @@
     renderWiz();
     setTimeout(function(){
       if(wizIdx < ASSESS.length-1){ wizIdx++; renderWiz(); }
-      else { showResults(); }
+      else { showContactPanel(); }
     }, 230);
   }
   function wizPrev(){ if(wizIdx>0){ wizIdx--; renderWiz(); } }
@@ -808,7 +857,43 @@
       : "Your HR is highly mature. Explore how agentic AI and Joule can push you even further.";
 
     showResultsView(true);
-    try{ localStorage.setItem("sapAssess", JSON.stringify(answers)); }catch(e){}
+    try{ localStorage.setItem("sapAssessTest", JSON.stringify(answers)); }catch(e){}
+  }
+
+  var SHEETS_URL = "YOUR_APPS_SCRIPT_URL";
+
+  function sendToSheets(name, company, email, d){
+    var lbl = function(s){return s===0?"Not in place":s===1?"Partially in place":"Fully in place";};
+    var payload = {
+      name: name, company: company, email: email,
+      score: d.pct, level: d.level,
+      recruitment: lbl(d.scores[0]), onboarding: lbl(d.scores[1]),
+      learning:    lbl(d.scores[2]), feedback:    lbl(d.scores[3]),
+      analytics:   lbl(d.scores[4]), dashboards:  lbl(d.scores[5])
+    };
+    if(SHEETS_URL && SHEETS_URL !== "YOUR_APPS_SCRIPT_URL"){
+      fetch(SHEETS_URL, {method:"POST", mode:"no-cors", body:JSON.stringify(payload)}).catch(function(){});
+    }
+    var msg = "New assessment submitted\n\n"
+      + "Name: " + name + "\n"
+      + "Company: " + company + "\n"
+      + (email ? "Email: " + email + "\n" : "")
+      + "\nScore: " + d.pct + "% - " + d.level + " (" + d.total + "/" + d.max + " points)\n\n"
+      + "Recruitment: " + lbl(d.scores[0]) + "\n"
+      + "Onboarding: "  + lbl(d.scores[1]) + "\n"
+      + "Learning: "    + lbl(d.scores[2]) + "\n"
+      + "Feedback: "    + lbl(d.scores[3]) + "\n"
+      + "Analytics: "   + lbl(d.scores[4]) + "\n"
+      + "Dashboards: "  + lbl(d.scores[5]);
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {"Content-Type": "application/json", "Accept": "application/json"},
+      body: JSON.stringify({
+        access_key: "6369b3c8-bcd4-4d87-8bd7-9c996fe3d85e",
+        subject: "New lead: " + name + " at " + company + " (" + d.pct + "% - " + d.level + ")",
+        message: msg
+      })
+    }).catch(function(){});
   }
 
   function finishAssessment(){
